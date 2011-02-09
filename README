@@ -1,0 +1,211 @@
+NAME
+    Sub::Spec - Add spec to your subs so it can be more useful/reusable
+
+VERSION
+    version 0.01
+
+SYNOPSIS
+    In your module:
+
+     package MyModule;
+
+     use 5.010;
+     use strict;
+     use warnings;
+
+     our %SUBS;
+     $SUBS{pow} = {
+         summary     => 'Exponent a number',
+         description => <<'_',
+    ...
+    _
+         args        => {
+             base => [float => {summary=>"Base number", required=>1, arg_pos=>0}],
+             exp  => [float => {summary=>"Exponent"   , required=>1, arg_pos=>1}],
+         },
+     };
+     sub pow {
+         my (%args) = @_;
+         return [200, "OK", $arg{base} ** $arg{exp}];
+     }
+
+    Use your subs in Perl scripts/modules:
+
+     package MyApp;
+     use 5.010;
+     use Sub::Spec;
+     use MyModule qw(pow);
+     my $res;
+
+     # schema checking (NOT WORKING YET)
+     #$res = pow(base => 1);   # [400, "Missing argument: exp"]
+     #$res = pow(base => "a"); # [400, "Invalid argument: base must be a float"]
+
+     $res = pow(base => 2, exp=>10); # [200, "OK", 1024]
+     say $res->[2];
+
+    Use positional arguments (NOT WORKING YET, SPEC NOT EVEN FINALIZED):
+
+     use YourModule pow => {positional=>1};
+     $res = pow(2, 10); # [200, "OK", 1024]
+
+    Return data only instead of with status code + message (NOT WORKING
+    YET):
+
+     use YourModule pow => {unwrap=>1};
+
+     say pow(base=>2, exp=>10); # 1024
+     say pow(base=>2); # now throws exception due to missing required arg 'exp'
+
+    Use your subs from the command line:
+
+     % cat script.pl
+     #!/usr/bin/perl
+     use Sub::Spec::CmdLine qw(run);
+     run(module=>"MyModule", sub=>"pow");
+
+     % script.pl --help
+     (Usage message ...)
+
+     % script.pl --base 2 --exp 10
+     1024
+
+     % script.pl 2 10
+     1024
+
+     % script.pl 2
+     Error: Missing required argument exp
+
+    Create HTTP REST API from your subs (NOT WORKING YET, SPEC NOT FINALIZED
+    YET):
+
+     % cat apid.pl
+     #!/usr/bin/perl
+     use Sub::Spec::HTTPD qw(run);
+     run(port=>8000, module=>"MyModule", sub=>"pow");
+
+     $ curl http://localhost:8000/api/MyModule/pow?base=2&exp=10
+     1024
+
+DESCRIPTION
+    NOTE: This module is still very early in development. Most of the
+    features are not even implemented yet.
+
+    Subroutines are an excellent unit of reuse, in some ways they are even
+    superior to objects (they are simpler, map better to HTTP/network
+    programming due to being stateless, etc). Sub::Spec aims to make your
+    subs much more useful, reusable, powerful. All you have to do is provide
+    some metadata (a spec) for your sub and follow some simple conventions,
+    explained below in "HOW TO USE".
+
+    Below are the features provided by Sub::Spec:
+
+    *   fast and flexible parameter checking
+
+        See Sub::Spec::args and Sub::Spec::return for more details.
+
+    *   positional as well as named arguments calling style
+
+        See the export clause -positional in Sub::Spec::Exporter.
+
+    *   flexible exporting
+
+        See Sub::Spec::Exporter.
+
+    *   easy switching between exception-based and return-code error
+        handling
+
+        See the export clause -positional in Sub::Spec::Exporter.
+
+    *   command-line access
+
+        You can basically turn your subs into a command-line program with a
+        single line of code, complete with argument processing, --help,
+        pretty-printing of output. See Sub::Spec::CmdLine for more
+        information.
+
+    *   HTTP REST access
+
+        Creating an API from your subs is dead easy. See Sub::Spec::HTTPD.
+
+    *   generation of API documentation (POD, etc)
+
+        See Sub::Spec::Pod on how to generate POD, see gen_usage() in
+        Sub::Spec::CmdLine to generate text help message.
+
+    *   execution time limits
+
+        See Sub::Spec::timeout.
+
+    *   automatic retries
+
+        See Sub::Spec::retry.
+
+    *   logging
+
+    *   and more ...
+
+        The Sub::Spec framework is extensible, you can add more clauses
+        easily. See Sub::Spec::Manual::Extension.
+
+    Despite all this, there is virtually no unnecessary cost to bear if you
+    do not want some/any of the features Sub::Spec provides. If Sub::Spec is
+    not loaded, your subs behaves 100% like a normal Perl subroutine.
+
+HOW TO USE
+  Prepare a spec
+    Sub spec is a hashref, typically put inside package global hash %SUBS.
+
+    XXX
+
+  Accept named arguments (in hash)
+    That is, do this:
+
+     my %args = @_;
+
+    instead of:
+
+     my ($arg1, $arg2, $arg3) = @_;
+
+    Named arguments can stand refactoring/API changes better, they are
+    scalable to tens or more arguments, the names can be used by API/command
+    line arguments, etc. You can use positional arguments when calling your
+    sub using the positional clause.
+
+  Return [errcode, errmsg, data]
+    Instead of returning just data, always return at least these 3 pieces of
+    information.
+
+    See XXX.
+
+    That's it.
+
+FAQ
+    XXX
+
+SEE ALSO
+  Modules used
+    Data::Sah for schema checking.
+
+    Log::Any for logging.
+
+    Sub::Install to wrap subroutines.
+
+  Alternative modules
+    If you just want to give named arguments, you might want to consider
+    Sub::NamedParams.
+
+    You can check out Sub::Attempts for retries.
+
+    There are a gazillion modules for parameter checking. Data::Sah lists a
+    few of them.
+
+AUTHOR
+    Steven Haryanto <stevenharyanto@gmail.com>
+
+COPYRIGHT AND LICENSE
+    This software is copyright (c) 2011 by Steven Haryanto.
+
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
+
