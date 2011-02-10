@@ -1,7 +1,7 @@
 # just to make PodWeaver happy atm
 package Sub::Spec::Manual::Spec;
 BEGIN {
-  $Sub::Spec::Manual::Spec::VERSION = '0.01';
+  $Sub::Spec::Manual::Spec::VERSION = '0.02';
 }
 # ABSTRACT: Specification for Sub::Spec
 
@@ -17,7 +17,7 @@ Sub::Spec::Manual::Spec - Specification for Sub::Spec
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 AUTHOR
 

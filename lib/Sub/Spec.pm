@@ -1,8 +1,8 @@
 package Sub::Spec;
 BEGIN {
-  $Sub::Spec::VERSION = '0.01';
+  $Sub::Spec::VERSION = '0.02';
 }
-# ABSTRACT: Add spec to your subs so it can be more useful/reusable
+# ABSTRACT: Subroutine metadata & wrapping framework
 
 use 5.010;
 use strict;
@@ -11,6 +11,8 @@ use warnings;
 #use Data::Sah;
 #use Sub::Install;
 
+# NOTE: use goto $sub (doesn't add to call stack, doesn't need to pass @_ again)
+
 1;
 
 
@@ -18,11 +20,11 @@ use warnings;
 
 =head1 NAME
 
-Sub::Spec - Add spec to your subs so it can be more useful/reusable
+Sub::Spec - Subroutine metadata & wrapping framework
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 SYNOPSIS
 
