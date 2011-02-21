@@ -1,6 +1,6 @@
 package Sub::Spec::Exporter;
 BEGIN {
-  $Sub::Spec::Exporter::VERSION = '0.02';
+  $Sub::Spec::Exporter::VERSION = '0.03';
 }
 # ABSTRACT: Flexible and painless exporting for your subs
 
@@ -15,7 +15,7 @@ Sub::Spec::Exporter - Flexible and painless exporting for your subs
 
 =head1 VERSION
 
-version 0.02
+version 0.03
 
 =head1 DESCRIPTION
 

@@ -1,23 +1,31 @@
-# just to make PodWeaver happy atm
-package Sub::Spec::Manual::Extension;
+package Sub::Spec::Clause::retry;
 BEGIN {
-  $Sub::Spec::Manual::Extension::VERSION = '0.02';
+  $Sub::Spec::Clause::retry::VERSION = '0.03';
 }
-# ABSTRACT: Extending Sub::Spec
-
+# ABSTRACT: Retry subroutine upon failure
 
 1;
 
-__END__
+
 =pod
 
 =head1 NAME
 
-Sub::Spec::Manual::Extension - Extending Sub::Spec
+Sub::Spec::Clause::retry - Retry subroutine upon failure
 
 =head1 VERSION
 
-version 0.02
+version 0.03
+
+=head1 SYNOPSIS
+
+NOT SPECIFIED & IMPLEMENTED YET.
+
+=head1 SEE ALSO
+
+L<Data::Sah>
+
+L<Sub::Retry>
 
 =head1 AUTHOR
 
@@ -31,4 +39,7 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
+
+
+__END__
 

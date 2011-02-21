@@ -1,6 +1,6 @@
 package Sub::Spec;
 BEGIN {
-  $Sub::Spec::VERSION = '0.02';
+  $Sub::Spec::VERSION = '0.03';
 }
 # ABSTRACT: Subroutine metadata & wrapping framework
 
@@ -10,8 +10,6 @@ use warnings;
 
 #use Data::Sah;
 #use Sub::Install;
-
-# NOTE: use goto $sub (doesn't add to call stack, doesn't need to pass @_ again)
 
 1;
 
@@ -24,7 +22,7 @@ Sub::Spec - Subroutine metadata & wrapping framework
 
 =head1 VERSION
 
-version 0.02
+version 0.03
 
 =head1 SYNOPSIS
 
@@ -36,8 +34,8 @@ In your module:
  use strict;
  use warnings;
 
- our %SUBS;
- $SUBS{pow} = {
+ our %SPEC;
+ $SPEC{pow} = {
      summary     => 'Exponent a number',
      description => <<'_',
 ...
@@ -67,19 +65,20 @@ Use your subs in Perl scripts/modules:
  $res = pow(base => 2, exp=>10); # [200, "OK", 1024]
  say $res->[2];
 
-Use positional arguments (NOT WORKING YET, SPEC NOT EVEN FINALIZED):
+Use positional arguments (NOT WORKING YET):
 
- use YourModule pow => {positional=>1};
+ use MyModule pow => {positional=>1};
  $res = pow(2, 10); # [200, "OK", 1024]
 
 Return data only instead of with status code + message (NOT WORKING YET):
 
- use YourModule pow => {unwrap=>1};
+ use MyModule pow => {unwrap=>1};
 
  say pow(base=>2, exp=>10); # 1024
  say pow(base=>2); # now throws exception due to missing required arg 'exp'
 
-Use your subs from the command line:
+Use your subs from the command line (see L<Sub::Spec::CmdLine> for more
+details):
 
  % cat script.pl
  #!/usr/bin/perl
@@ -98,11 +97,12 @@ Use your subs from the command line:
  % script.pl 2
  Error: Missing required argument exp
 
-Create HTTP REST API from your subs (NOT WORKING YET, SPEC NOT FINALIZED YET):
+Create HTTP REST API from your subs (NOT WORKING YET, see L<Sub::Spec::HTTP> for
+more details):
 
  % cat apid.pl
  #!/usr/bin/perl
- use Sub::Spec::HTTPD qw(run);
+ use Sub::Spec::HTTP qw(run);
  run(port=>8000, module=>"MyModule", sub=>"pow");
 
  $ curl http://localhost:8000/api/MyModule/pow?base=2&exp=10
@@ -114,11 +114,10 @@ NOTE: This module is still very early in development. Most of the features are
 not even implemented yet.
 
 Subroutines are an excellent unit of reuse, in some ways they are even superior
-to objects (they are simpler, map better to HTTP/network programming due to
-being stateless, etc). Sub::Spec aims to make your subs much more useful,
-reusable, powerful. All you have to do is provide some metadata (a spec) for
-your sub and follow some simple conventions, explained below in L</"HOW TO
-USE">.
+to objects (simpler, map better to HTTP/network programming due to being
+stateless, etc). Sub::Spec aims to make your subs much more useful, reusable,
+powerful. All you have to do is provide some metadata (a spec) for your sub and
+follow some simple conventions, explained below in L</"HOW TO USE">.
 
 Below are the features provided by Sub::Spec:
 
@@ -126,7 +125,8 @@ Below are the features provided by Sub::Spec:
 
 =item * fast and flexible parameter checking
 
-See L<Sub::Spec::args> and L<Sub::Spec::return> for more details.
+See L<Sub::Spec::Clause::args> and L<Sub::Spec::Clause::returns> for more
+details.
 
 =item * positional as well as named arguments calling style
 
@@ -138,30 +138,32 @@ See L<Sub::Spec::Exporter>.
 
 =item * easy switching between exception-based and return-code error handling
 
-See the export clause B<-positional> in L<Sub::Spec::Exporter>.
+See the export clause B<-exception> in L<Sub::Spec::Exporter>.
 
 =item * command-line access
 
 You can basically turn your subs into a command-line program with a single line
-of code, complete with argument processing, --help, pretty-printing of output.
-See L<Sub::Spec::CmdLine> for more information.
+of code, complete with argument processing, --help, pretty-printing of output,
+and bash tab-completion. See L<Sub::Spec::CmdLine> for more information.
 
 =item * HTTP REST access
 
-Creating an API from your subs is dead easy. See L<Sub::Spec::HTTPD>.
+Creating an API from your subs is dead easy. See L<Sub::Spec::HTTP>.
 
 =item * generation of API documentation (POD, etc)
 
-See L<Sub::Spec::Pod> on how to generate POD, see gen_usage() in
-L<Sub::Spec::CmdLine> to generate text help message.
+See L<Sub::Spec::Pod> on how to generate POD and L<Pod::Weaver::Plugin::SubSpec>
+on how to do this when building dist with L<Dist::Zilla>.
+
+See gen_usage() in L<Sub::Spec::CmdLine> to generate text help message.
 
 =item * execution time limits
 
-See L<Sub::Spec::timeout>.
+See L<Sub::Spec::Clause::timeout>.
 
 =item * automatic retries
 
-See L<Sub::Spec::retry>.
+See L<Sub::Spec::Clause::retry>.
 
 =item * logging
 
@@ -172,45 +174,103 @@ L<Sub::Spec::Manual::Extension>.
 
 =back
 
-Despite all this, there is virtually no unnecessary cost to bear if you do not
-want some/any of the features Sub::Spec provides. If Sub::Spec is not loaded,
-your subs behaves 100% like a normal Perl subroutine.
-
 =head1 HOW TO USE
 
-=head2 Prepare a spec
+To use Sub::Spec and its family of features, you need to follow these three
+simple steps:
 
-Sub spec is a hashref, typically put inside package global hash %SUBS.
+=over 4
 
-XXX
+=item * Prepare a spec for you sub
 
-=head2 Accept named arguments (in hash)
+Sub spec is a hashref, typically put inside package global hash %SPEC.
 
-That is, do this:
+ package MyModule;
 
- my %args = @_;
+ our %SPEC;
 
-instead of:
+ $SPEC{is_palindrome} = {
+     name        => 'is_palindrome',
+     summary     => 'Checks whether a string is a palindrome',
+     description => '(a longer paragraph describing the sub ...)',
+     args    => {
+         str => ['str*' => {
+             arg_pos     => 0,
+             summary     => 'String to check',
+             description => '(a longer paragraph describing argument ...)',
+             min_len     => 1,
+         }],
+         ci => ['bool' => {
+             summary     => 'Whether checking is case-insensitive',
+             description => '(a longer paragraph describing argument ...)',
+             default     => 0,
+         }],
+     },
+ }
+ sub is_palindrome {
+     my %args = @_;
+     [200, "OK", $args{str} eq reverse($args{str})];
+ }
+ 1;
 
- my ($arg1, $arg2, $arg3) = @_;
+Each key in the spec hashref is called a spec clause. The list of known clauses
+is described in L</"CLAUSES">.
+
+=item * Accept named arguments
+
+That is, instead of this:
+
+ sub foo {
+     my ($arg1, $arg2, ...) = @_;
+     ...
+ }
+
+do this instead:
+
+ sub foo {
+     my %args = @_;
+     ...
+ }
 
 Named arguments can stand refactoring/API changes better, they are scalable to
 tens or more arguments, the names can be used by API/command line arguments,
-etc. You can use positional arguments when calling your sub using the
-B<positional> clause.
+etc.
 
-=head2 Return [errcode, errmsg, data]
+However, sub caller can choose to use positional arguments when calling your sub
+using the B<positional> clause when they export your subs, as long as you
+provide the position information using the B<arg_pos> argument clause. See
+L<Sub::Spec::Exporter> and L<Sub::Spec::Clause::args>.
 
-Instead of returning just data, always return at least these 3 pieces of
-information.
+=item * Return [STATUSCODE, ERRMSG, DATA]
 
-See XXX.
+That is, instead of doing this:
 
-That's it.
+ return 'foo';
+
+you always return status code as well as error message as well:
+
+ return [200, "OK", 'foo'];
+
+The status code is a 3-digit number and corresponds to HTTP response status
+codes as much as possible. This will make it straightforward to create an HTTP
+REST API for the sub.
+
+=back
+
+That's it. The hardest part is probably the spec, but you can add the simplest
+spec and add more stuffs as you go along.
+
+=head1 CLAUSES
+
+Here are the general clauses. For the rest of the clauses see respective
+Sub::Spec::Clause::<CLAUSE_NAME>, e.g. L<Sub::Spec::Clause::args>, etc.
+
+Sub::Spec is extensible, you can add your own clauses (see
+L<Sub::Spec::Manual::Clause> for more information).
 
 =head1 FAQ
 
-XXX
+See L<Sub::Spec::Manual::FAQ>
 
 =head1 SEE ALSO
 
@@ -219,8 +279,6 @@ XXX
 L<Data::Sah> for schema checking.
 
 L<Log::Any> for logging.
-
-L<Sub::Install> to wrap subroutines.
 
 =head2 Alternative modules
 
