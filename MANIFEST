@@ -14,6 +14,7 @@ lib/Sub/Spec/Clause/returns.pm
 lib/Sub/Spec/Clause/timeout.pm
 lib/Sub/Spec/Exporter.pm
 lib/Sub/Spec/Manual/Clause.pod
+lib/Sub/Spec/Utils.pm
 t/00-compile.t
 t/release-pod-coverage.t
 t/release-pod-syntax.t

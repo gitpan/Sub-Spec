@@ -1,6 +1,6 @@
 package Sub::Spec::Clause::args;
 BEGIN {
-  $Sub::Spec::Clause::args::VERSION = '0.03';
+  $Sub::Spec::Clause::args::VERSION = '0.04';
 }
 # ABSTRACT: Schema for subroutine parameters
 
@@ -15,7 +15,7 @@ Sub::Spec::Clause::args - Schema for subroutine parameters
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 SYNOPSIS
 
@@ -25,7 +25,7 @@ In your spec:
 
  args => {
    # ARG_NAME => SCHEMA
-   num => ['int*' => {arg_order=>0, min=>0, divisible_by=>2}],
+   num => ['int*' => {arg_pos=>0, min=>0, divisible_by=>2}],
    ...
  },
  required_args => [qw/num/],
@@ -60,7 +60,7 @@ In that case, your spec will be something like this:
 Since each argument is a Sah schema, all Sah type clauses are allowed. But there
 are several type clauses added specific to arguments:
 
-=head2 arg_order => INT, 0+
+=head2 arg_pos => INT, 0+
 
 Specify the order of argument when specified in a positional order. Utilized by
 L<Sub::Spec::Exporter> and L<Sub::Spec::CmdLine> to parse positional arguments.
@@ -69,8 +69,8 @@ Example:
  $SPEC{multiply2} = {
      summary => 'Multiple two numbers (a & b)',
      args    => {
-         a      => ['num*' => {arg_order=>0}],
-         b      => ['num*' => {arg_order=>1}],
+         a      => ['num*' => {arg_pos=>0}],
+         b      => ['num*' => {arg_pos=>1}],
          digits => 'int',
      },
  }
@@ -93,6 +93,44 @@ And in the command-line, any of below is allowed:
  % cmd --a 2 --b 3
  % cmd 2 --b 3
  % cmd 2 3
+
+=head2 arg_greedy => BOOL
+
+Specify whether, in positional arguments, this argument should gobble up the
+rest of the arguments into array.
+
+Example:
+
+ $SPEC{multiply} = {
+     summary => 'Multiple numbers',
+     args    => {
+         nums   => ['num*[]*' => {arg_pos=>0, arg_greedy=>1, min_len=>1}],
+     },
+ }
+ sub multiply {
+     my %args = @_;
+     my $nums = $args{nums};
+
+     my $ans = 1;
+     $ans *= $_ for @$nums;
+     [200, "OK", $ans];
+ }
+
+In positional mode it can then be called:
+
+ multiply(2, 3, 4);
+
+which is the same as (in normal named mode):
+
+ multiply(nums => [2, 3, 4]);
+
+In command-line:
+
+ % cmd 2 3 4
+
+instead of:
+
+ % cmd --nums '[2, 3, 4]'
 
 =head2 arg_complete => CODEREF
 

@@ -1,6 +1,6 @@
 package Sub::Spec::Clause::timeout;
 BEGIN {
-  $Sub::Spec::Clause::timeout::VERSION = '0.03';
+  $Sub::Spec::Clause::timeout::VERSION = '0.04';
 }
 # ABSTRACT: Limit subroutine execution
 
@@ -15,7 +15,7 @@ Sub::Spec::Clause::timeout - Limit subroutine execution
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 SYNOPSIS
 

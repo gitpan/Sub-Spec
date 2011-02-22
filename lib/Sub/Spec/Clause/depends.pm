@@ -1,6 +1,6 @@
 package Sub::Spec::Clause::depends;
 BEGIN {
-  $Sub::Spec::Clause::depends::VERSION = '0.03';
+  $Sub::Spec::Clause::depends::VERSION = '0.04';
 }
 # ABSTRACT: Specify subroutine dependency
 
@@ -15,7 +15,7 @@ Sub::Spec::Clause::depends - Specify subroutine dependency
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 SYNOPSIS
 
@@ -41,7 +41,7 @@ example, by L<Sub::Spec::RunDepends> to run subroutine's dependencies
 
 =head1 DEPENDENCY CLAUSES
 
-=head1 subname
+=head2 subname
 
 =head2 all
 

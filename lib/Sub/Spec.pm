@@ -1,6 +1,6 @@
 package Sub::Spec;
 BEGIN {
-  $Sub::Spec::VERSION = '0.03';
+  $Sub::Spec::VERSION = '0.04';
 }
 # ABSTRACT: Subroutine metadata & wrapping framework
 
@@ -22,7 +22,7 @@ Sub::Spec - Subroutine metadata & wrapping framework
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 SYNOPSIS
 
@@ -264,6 +264,25 @@ spec and add more stuffs as you go along.
 
 Here are the general clauses. For the rest of the clauses see respective
 Sub::Spec::Clause::<CLAUSE_NAME>, e.g. L<Sub::Spec::Clause::args>, etc.
+
+=over 4
+
+=item * name
+
+The name of the subroutine. Useful for generating help/usage information, or
+when aliasing subroutines (and reusing the spec) and finding out the
+canonical/original name of the subroutine.
+
+=item * summary
+
+A one-line summary. It should be plain text without any markup.
+
+=item * description
+
+A longer description. Currently the format of the text inside is not yet
+specified. It is probably going to be Markdown, not POD/HTML.
+
+=back
 
 Sub::Spec is extensible, you can add your own clauses (see
 L<Sub::Spec::Manual::Clause> for more information).

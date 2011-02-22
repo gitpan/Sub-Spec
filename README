@@ -2,7 +2,7 @@ NAME
     Sub::Spec - Subroutine metadata & wrapping framework
 
 VERSION
-    version 0.03
+    version 0.04
 
 SYNOPSIS
     In your module:
@@ -239,6 +239,21 @@ HOW TO USE
 CLAUSES
     Here are the general clauses. For the rest of the clauses see respective
     Sub::Spec::Clause::<CLAUSE_NAME>, e.g. Sub::Spec::Clause::args, etc.
+
+    *   name
+
+        The name of the subroutine. Useful for generating help/usage
+        information, or when aliasing subroutines (and reusing the spec) and
+        finding out the canonical/original name of the subroutine.
+
+    *   summary
+
+        A one-line summary. It should be plain text without any markup.
+
+    *   description
+
+        A longer description. Currently the format of the text inside is not
+        yet specified. It is probably going to be Markdown, not POD/HTML.
 
     Sub::Spec is extensible, you can add your own clauses (see
     Sub::Spec::Manual::Clause for more information).
