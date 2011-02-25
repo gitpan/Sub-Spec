@@ -1,6 +1,6 @@
 package Sub::Spec;
 BEGIN {
-  $Sub::Spec::VERSION = '0.04';
+  $Sub::Spec::VERSION = '0.05';
 }
 # ABSTRACT: Subroutine metadata & wrapping framework
 
@@ -22,7 +22,7 @@ Sub::Spec - Subroutine metadata & wrapping framework
 
 =head1 VERSION
 
-version 0.04
+version 0.05
 
 =head1 SYNOPSIS
 

@@ -1,5 +1,10 @@
 Revision history for Sub::Spec
 
+0.05     2011-02-25
+
+         More doc on the 'depends' clause.
+
+
 0.04     2011-02-22
 
          Add (temporary) Sub::Spec::Utils.
