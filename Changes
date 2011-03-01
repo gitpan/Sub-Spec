@@ -1,5 +1,20 @@
 Revision history for Sub::Spec
 
+0.06     2011-02-27
+
+       [INCOMPATIBLE CHANGES]
+
+         Rename clauses: 'depends' -> 'deps', 'returns' -> 'return'.
+
+         Rename dependency clause: 'module' -> 'mod'.
+
+       [ENHANCEMENTS]
+
+         Implement 'deps' checking.
+
+         Add dependency clauses: 'code', 'exec'.
+
+
 0.05     2011-02-25
 
          More doc on the 'depends' clause.

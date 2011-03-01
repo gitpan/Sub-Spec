@@ -14,7 +14,7 @@ Sub::Spec::Manual::Clause - Extending Sub::Spec by adding a new clause
 
 =head1 VERSION
 
-version 0.05
+version 0.06
 
 =head1 AUTHOR
 

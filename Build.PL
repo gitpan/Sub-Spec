@@ -17,12 +17,14 @@ my %module_build_args = (
     'Steven Haryanto <stevenharyanto@gmail.com>'
   ],
   'dist_name' => 'Sub-Spec',
-  'dist_version' => '0.05',
+  'dist_version' => '0.06',
   'license' => 'perl',
   'module_name' => 'Sub::Spec',
   'recommends' => {},
   'recursive_test_files' => 1,
   'requires' => {
+    'File::Which' => '0',
+    'Probe::Perl' => '0',
     'perl' => '5.010000'
   },
   'script_files' => []

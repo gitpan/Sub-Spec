@@ -8,13 +8,14 @@ README
 dist.ini
 lib/Sub/Spec.pm
 lib/Sub/Spec/Clause/args.pm
-lib/Sub/Spec/Clause/depends.pm
+lib/Sub/Spec/Clause/deps.pm
 lib/Sub/Spec/Clause/retry.pm
-lib/Sub/Spec/Clause/returns.pm
+lib/Sub/Spec/Clause/return.pm
 lib/Sub/Spec/Clause/timeout.pm
 lib/Sub/Spec/Exporter.pm
 lib/Sub/Spec/Manual/Clause.pod
 lib/Sub/Spec/Utils.pm
 t/00-compile.t
+t/clause-deps-check.t
 t/release-pod-coverage.t
 t/release-pod-syntax.t
