@@ -1,6 +1,6 @@
 package Sub::Spec::Clause::return;
 BEGIN {
-  $Sub::Spec::Clause::return::VERSION = '0.06';
+  $Sub::Spec::Clause::return::VERSION = '0.07';
 }
 # ABSTRACT: Specify return value
 
@@ -15,7 +15,7 @@ Sub::Spec::Clause::return - Specify return value
 
 =head1 VERSION
 
-version 0.06
+version 0.07
 
 =head1 SYNOPSIS
 

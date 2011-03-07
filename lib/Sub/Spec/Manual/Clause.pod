@@ -14,7 +14,40 @@ Sub::Spec::Manual::Clause - Extending Sub::Spec by adding a new clause
 
 =head1 VERSION
 
-version 0.06
+version 0.07
+
+=head1 DESCRIPTION
+
+XXX
+
+=head2 Properties
+
+=over 4
+
+=item * per_import => BOOL
+
+If true, this means that for each importer, Sub::Spec will construct a new
+wrapper for the subroutine.
+
+Retry and timeout are two such clauses.
+
+=item * per_call => BOOL
+
+If true, this means that in each subroutine call you can pass some value to
+modify the clause behaviour: -CLAUSENAME => VALUE. The wrapper is able to act
+upon the different clause arguments.
+
+Retry and timeout are two such clauses. You can specify retry and timeout on a
+per-call basis:
+
+ search_files(root => '/', pattern => qr/^[abc]/, -timeout => 30);
+ download_url(url => 'http://host/path', -timeout => 300, -retry => 4);
+
+=back
+
+=head1 SEE ALSO
+
+XXX
 
 =head1 AUTHOR
 

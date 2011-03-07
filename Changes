@@ -1,5 +1,12 @@
 Revision history for Sub::Spec
 
+0.07     2011-03-07
+
+         Specify 'features' clause.
+
+         Some small fixes and docs addition.
+
+
 0.06     2011-02-27
 
        [INCOMPATIBLE CHANGES]

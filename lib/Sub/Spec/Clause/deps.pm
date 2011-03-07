@@ -1,6 +1,6 @@
 package Sub::Spec::Clause::deps;
 BEGIN {
-  $Sub::Spec::Clause::deps::VERSION = '0.06';
+  $Sub::Spec::Clause::deps::VERSION = '0.07';
 }
 # ABSTRACT: Specify subroutine dependencies
 
@@ -8,7 +8,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Data::Dump qw(dump);
+#use Data::Dump qw(dump);
 
 
 sub check {
@@ -114,7 +114,7 @@ Sub::Spec::Clause::deps - Specify subroutine dependencies
 
 =head1 VERSION
 
-version 0.06
+version 0.07
 
 =head1 SYNOPSIS
 
@@ -139,7 +139,7 @@ In your spec:
 
 =head1 DESCRIPTION
 
-Th 'deps' clause adds information about subroutine dependency. It is
+The 'deps' clause adds information about subroutine dependency. It is
 extensible so you can specify anything as a dependency, be it another
 subroutine, Perl version and modules, environment variables, etc. It is up to
 some implementor to make use of this information.

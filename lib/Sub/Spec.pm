@@ -1,6 +1,6 @@
 package Sub::Spec;
 BEGIN {
-  $Sub::Spec::VERSION = '0.06';
+  $Sub::Spec::VERSION = '0.07';
 }
 # ABSTRACT: Subroutine metadata & wrapping framework
 
@@ -22,7 +22,7 @@ Sub::Spec - Subroutine metadata & wrapping framework
 
 =head1 VERSION
 
-version 0.06
+version 0.07
 
 =head1 SYNOPSIS
 
@@ -209,7 +209,10 @@ Sub spec is a hashref, typically put inside package global hash %SPEC.
  }
  sub is_palindrome {
      my %args = @_;
-     [200, "OK", $args{str} eq reverse($args{str})];
+     my $str  = $args{str};
+     my $ci   = $args{ci};
+     $str     = lc($str) if $ci;
+     [200, "OK", $str eq reverse($str)];
  }
  1;
 
@@ -220,15 +223,17 @@ is described in L</"CLAUSES">.
 
 That is, instead of this:
 
- sub foo {
-     my ($arg1, $arg2, ...) = @_;
+ sub is_palindrome {
+     my ($str, $ci, ...) = @_;
      ...
  }
 
 do this instead:
 
- sub foo {
+ sub is_palindrome {
      my %args = @_;
+     my $str  = $args{str};
+     my $ci   = $args{ci};
      ...
  }
 
@@ -245,11 +250,11 @@ L<Sub::Spec::Exporter> and L<Sub::Spec::Clause::args>.
 
 That is, instead of doing this:
 
- return 'foo';
+ return $str eq reverse($str);
 
 you always return status code as well as error message as well:
 
- return [200, "OK", 'foo'];
+ return [200, "OK", $str eq reverse($str)];
 
 The status code is a 3-digit number and corresponds to HTTP response status
 codes as much as possible. This will make it straightforward to create an HTTP
@@ -257,8 +262,8 @@ REST API for the sub.
 
 =back
 
-That's it. The hardest part is probably the spec, but you can add the simplest
-spec and add more stuffs as you go along.
+That's it. The hardest part is probably writing the spec, but you can add the
+simplest spec and add more stuffs as you go along.
 
 =head1 CLAUSES
 

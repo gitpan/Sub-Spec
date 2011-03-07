@@ -9,6 +9,7 @@ dist.ini
 lib/Sub/Spec.pm
 lib/Sub/Spec/Clause/args.pm
 lib/Sub/Spec/Clause/deps.pm
+lib/Sub/Spec/Clause/features.pm
 lib/Sub/Spec/Clause/retry.pm
 lib/Sub/Spec/Clause/return.pm
 lib/Sub/Spec/Clause/timeout.pm
