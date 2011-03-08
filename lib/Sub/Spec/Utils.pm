@@ -1,6 +1,6 @@
 package Sub::Spec::Utils;
 BEGIN {
-  $Sub::Spec::Utils::VERSION = '0.07';
+  $Sub::Spec::Utils::VERSION = '0.08';
 }
 
 use 5.010;
@@ -34,7 +34,7 @@ Sub::Spec::Utils
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 AUTHOR
 

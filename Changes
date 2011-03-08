@@ -1,5 +1,11 @@
 Revision history for Sub::Spec
 
+0.08     2011-03-08
+
+         Specify 'args_positional', 'result', 'result_naked', 'statuses'
+         clauses.
+
+
 0.07     2011-03-07
 
          Specify 'features' clause.

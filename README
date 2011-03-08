@@ -2,7 +2,7 @@ NAME
     Sub::Spec - Subroutine metadata & wrapping framework
 
 VERSION
-    version 0.07
+    version 0.08
 
 SYNOPSIS
     In your module:
@@ -46,13 +46,13 @@ SYNOPSIS
 
     Use positional arguments (NOT WORKING YET):
 
-     use MyModule pow => {positional=>1};
+     use MyModule pow => {args_positional=>1};
      $res = pow(2, 10); # [200, "OK", 1024]
 
     Return data only instead of with status code + message (NOT WORKING
     YET):
 
-     use MyModule pow => {unwrap=>1};
+     use MyModule pow => {result_naked=>1};
 
      say pow(base=>2, exp=>10); # 1024
      say pow(base=>2); # now throws exception due to missing required arg 'exp'
@@ -96,19 +96,19 @@ DESCRIPTION
     superior to objects (simpler, map better to HTTP/network programming due
     to being stateless, etc). Sub::Spec aims to make your subs much more
     useful, reusable, powerful. All you have to do is provide some metadata
-    (a spec) for your sub and follow some simple conventions, explained
-    below in "HOW TO USE".
+    (a spec) for your sub. See Sub::Spec::Manual::Spec for more details
+    about sub spec.
 
     Below are the features provided by Sub::Spec:
 
     *   fast and flexible parameter checking
 
-        See Sub::Spec::Clause::args and Sub::Spec::Clause::returns for more
+        See Sub::Spec::Clause::args and Sub::Spec::Clause::result for more
         details.
 
     *   positional as well as named arguments calling style
 
-        See the export clause -positional in Sub::Spec::Exporter.
+        See the export clause -args_positional in Sub::Spec::Exporter.
 
     *   flexible exporting
 
@@ -150,97 +150,6 @@ DESCRIPTION
 
     *   and more ...
 
-        The Sub::Spec framework is extensible, you can add more clauses
-        easily. See Sub::Spec::Manual::Extension.
-
-HOW TO USE
-    To use Sub::Spec and its family of features, you need to follow these
-    three simple steps:
-
-    *   Prepare a spec for you sub
-
-        Sub spec is a hashref, typically put inside package global hash
-        %SPEC.
-
-         package MyModule;
-
-         our %SPEC;
-
-         $SPEC{is_palindrome} = {
-             name        => 'is_palindrome',
-             summary     => 'Checks whether a string is a palindrome',
-             description => '(a longer paragraph describing the sub ...)',
-             args    => {
-                 str => ['str*' => {
-                     arg_pos     => 0,
-                     summary     => 'String to check',
-                     description => '(a longer paragraph describing argument ...)',
-                     min_len     => 1,
-                 }],
-                 ci => ['bool' => {
-                     summary     => 'Whether checking is case-insensitive',
-                     description => '(a longer paragraph describing argument ...)',
-                     default     => 0,
-                 }],
-             },
-         }
-         sub is_palindrome {
-             my %args = @_;
-             my $str  = $args{str};
-             my $ci   = $args{ci};
-             $str     = lc($str) if $ci;
-             [200, "OK", $str eq reverse($str)];
-         }
-         1;
-
-        Each key in the spec hashref is called a spec clause. The list of
-        known clauses is described in "CLAUSES".
-
-    *   Accept named arguments
-
-        That is, instead of this:
-
-         sub is_palindrome {
-             my ($str, $ci, ...) = @_;
-             ...
-         }
-
-        do this instead:
-
-         sub is_palindrome {
-             my %args = @_;
-             my $str  = $args{str};
-             my $ci   = $args{ci};
-             ...
-         }
-
-        Named arguments can stand refactoring/API changes better, they are
-        scalable to tens or more arguments, the names can be used by
-        API/command line arguments, etc.
-
-        However, sub caller can choose to use positional arguments when
-        calling your sub using the positional clause when they export your
-        subs, as long as you provide the position information using the
-        arg_pos argument clause. See Sub::Spec::Exporter and
-        Sub::Spec::Clause::args.
-
-    *   Return [STATUSCODE, ERRMSG, DATA]
-
-        That is, instead of doing this:
-
-         return $str eq reverse($str);
-
-        you always return status code as well as error message as well:
-
-         return [200, "OK", $str eq reverse($str)];
-
-        The status code is a 3-digit number and corresponds to HTTP response
-        status codes as much as possible. This will make it straightforward
-        to create an HTTP REST API for the sub.
-
-    That's it. The hardest part is probably writing the spec, but you can
-    add the simplest spec and add more stuffs as you go along.
-
 CLAUSES
     Here are the general clauses. For the rest of the clauses see respective
     Sub::Spec::Clause::<CLAUSE_NAME>, e.g. Sub::Spec::Clause::args, etc.
@@ -261,7 +170,7 @@ CLAUSES
         yet specified. It is probably going to be Markdown, not POD/HTML.
 
     Sub::Spec is extensible, you can add your own clauses (see
-    Sub::Spec::Manual::Clause for more information).
+    Sub::Spec::Manual::Spec for more information).
 
 FAQ
     See Sub::Spec::Manual::FAQ

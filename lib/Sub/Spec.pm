@@ -1,6 +1,6 @@
 package Sub::Spec;
 BEGIN {
-  $Sub::Spec::VERSION = '0.07';
+  $Sub::Spec::VERSION = '0.08';
 }
 # ABSTRACT: Subroutine metadata & wrapping framework
 
@@ -22,7 +22,7 @@ Sub::Spec - Subroutine metadata & wrapping framework
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 SYNOPSIS
 
@@ -67,12 +67,12 @@ Use your subs in Perl scripts/modules:
 
 Use positional arguments (NOT WORKING YET):
 
- use MyModule pow => {positional=>1};
+ use MyModule pow => {args_positional=>1};
  $res = pow(2, 10); # [200, "OK", 1024]
 
 Return data only instead of with status code + message (NOT WORKING YET):
 
- use MyModule pow => {unwrap=>1};
+ use MyModule pow => {result_naked=>1};
 
  say pow(base=>2, exp=>10); # 1024
  say pow(base=>2); # now throws exception due to missing required arg 'exp'
@@ -116,8 +116,8 @@ not even implemented yet.
 Subroutines are an excellent unit of reuse, in some ways they are even superior
 to objects (simpler, map better to HTTP/network programming due to being
 stateless, etc). Sub::Spec aims to make your subs much more useful, reusable,
-powerful. All you have to do is provide some metadata (a spec) for your sub and
-follow some simple conventions, explained below in L</"HOW TO USE">.
+powerful. All you have to do is provide some metadata (a spec) for your sub. See
+L<Sub::Spec::Manual::Spec> for more details about sub spec.
 
 Below are the features provided by Sub::Spec:
 
@@ -125,12 +125,12 @@ Below are the features provided by Sub::Spec:
 
 =item * fast and flexible parameter checking
 
-See L<Sub::Spec::Clause::args> and L<Sub::Spec::Clause::returns> for more
+See L<Sub::Spec::Clause::args> and L<Sub::Spec::Clause::result> for more
 details.
 
 =item * positional as well as named arguments calling style
 
-See the export clause B<-positional> in L<Sub::Spec::Exporter>.
+See the export clause B<-args_positional> in L<Sub::Spec::Exporter>.
 
 =item * flexible exporting
 
@@ -169,101 +169,7 @@ See L<Sub::Spec::Clause::retry>.
 
 =item * and more ...
 
-The Sub::Spec framework is extensible, you can add more clauses easily. See
-L<Sub::Spec::Manual::Extension>.
-
 =back
-
-=head1 HOW TO USE
-
-To use Sub::Spec and its family of features, you need to follow these three
-simple steps:
-
-=over 4
-
-=item * Prepare a spec for you sub
-
-Sub spec is a hashref, typically put inside package global hash %SPEC.
-
- package MyModule;
-
- our %SPEC;
-
- $SPEC{is_palindrome} = {
-     name        => 'is_palindrome',
-     summary     => 'Checks whether a string is a palindrome',
-     description => '(a longer paragraph describing the sub ...)',
-     args    => {
-         str => ['str*' => {
-             arg_pos     => 0,
-             summary     => 'String to check',
-             description => '(a longer paragraph describing argument ...)',
-             min_len     => 1,
-         }],
-         ci => ['bool' => {
-             summary     => 'Whether checking is case-insensitive',
-             description => '(a longer paragraph describing argument ...)',
-             default     => 0,
-         }],
-     },
- }
- sub is_palindrome {
-     my %args = @_;
-     my $str  = $args{str};
-     my $ci   = $args{ci};
-     $str     = lc($str) if $ci;
-     [200, "OK", $str eq reverse($str)];
- }
- 1;
-
-Each key in the spec hashref is called a spec clause. The list of known clauses
-is described in L</"CLAUSES">.
-
-=item * Accept named arguments
-
-That is, instead of this:
-
- sub is_palindrome {
-     my ($str, $ci, ...) = @_;
-     ...
- }
-
-do this instead:
-
- sub is_palindrome {
-     my %args = @_;
-     my $str  = $args{str};
-     my $ci   = $args{ci};
-     ...
- }
-
-Named arguments can stand refactoring/API changes better, they are scalable to
-tens or more arguments, the names can be used by API/command line arguments,
-etc.
-
-However, sub caller can choose to use positional arguments when calling your sub
-using the B<positional> clause when they export your subs, as long as you
-provide the position information using the B<arg_pos> argument clause. See
-L<Sub::Spec::Exporter> and L<Sub::Spec::Clause::args>.
-
-=item * Return [STATUSCODE, ERRMSG, DATA]
-
-That is, instead of doing this:
-
- return $str eq reverse($str);
-
-you always return status code as well as error message as well:
-
- return [200, "OK", $str eq reverse($str)];
-
-The status code is a 3-digit number and corresponds to HTTP response status
-codes as much as possible. This will make it straightforward to create an HTTP
-REST API for the sub.
-
-=back
-
-That's it. The hardest part is probably writing the spec, but you can add the
-simplest spec and add more stuffs as you go along.
 
 =head1 CLAUSES
 
@@ -290,7 +196,7 @@ specified. It is probably going to be Markdown, not POD/HTML.
 =back
 
 Sub::Spec is extensible, you can add your own clauses (see
-L<Sub::Spec::Manual::Clause> for more information).
+L<Sub::Spec::Manual::Spec> for more information).
 
 =head1 FAQ
 

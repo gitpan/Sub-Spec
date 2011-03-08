@@ -1,6 +1,6 @@
 package Sub::Spec::Clause::args;
 BEGIN {
-  $Sub::Spec::Clause::args::VERSION = '0.07';
+  $Sub::Spec::Clause::args::VERSION = '0.08';
 }
 # ABSTRACT: Schema for subroutine parameters
 
@@ -15,7 +15,7 @@ Sub::Spec::Clause::args - Schema for subroutine parameters
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 SYNOPSIS
 

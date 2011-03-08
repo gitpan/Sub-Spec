@@ -1,6 +1,6 @@
 # just to make PodWeaver happy atm
-package Sub::Spec::Manual::Clause;
-# ABSTRACT: Extending Sub::Spec by adding a new clause
+package Sub::Spec::Manual::Spec;
+# ABSTRACT: Spec for sub spec
 
 
 1;
@@ -10,15 +10,17 @@ __END__
 
 =head1 NAME
 
-Sub::Spec::Manual::Clause - Extending Sub::Spec by adding a new clause
+Sub::Spec::Manual::Spec - Spec for sub spec
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 DESCRIPTION
 
-XXX
+This documentation specifies the syntax for sub spec.
+
+=head2 CLAUSE
 
 =head2 Properties
 
@@ -44,6 +46,8 @@ per-call basis:
  download_url(url => 'http://host/path', -timeout => 300, -retry => 4);
 
 =back
+
+=head1 ADDING NEW CLAUSE
 
 =head1 SEE ALSO
 
