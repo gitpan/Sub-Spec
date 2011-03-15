@@ -15,9 +15,11 @@ meta-spec:
 name: Sub-Spec
 requires:
   File::Which: 0
+  Log::Any: 0
   Probe::Perl: 0
+  Test::More: 0.96
   perl: 5.010000
 resources:
   homepage: http://search.cpan.org/dist/Sub-Spec/
   repository: http://github.com/sharyanto/perl-Sub-Spec
-version: 0.08
+version: 0.10

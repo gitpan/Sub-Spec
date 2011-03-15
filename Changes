@@ -1,5 +1,15 @@
 Revision history for Sub::Spec
 
+0.10     2011-03-15
+
+         Add missing requirement to Log::Any.
+
+
+0.09     2011-03-15
+
+         Declare requirement Test::More 0.96 [RT#66616].
+
+
 0.08     2011-03-08
 
          Specify 'args_positional', 'result', 'result_naked', 'statuses'
@@ -15,13 +25,13 @@ Revision history for Sub::Spec
 
 0.06     2011-02-27
 
-       [INCOMPATIBLE CHANGES]
+         [INCOMPATIBLE CHANGES]
 
          Rename clauses: 'depends' -> 'deps', 'returns' -> 'return'.
 
          Rename dependency clause: 'module' -> 'mod'.
 
-       [ENHANCEMENTS]
+         [ENHANCEMENTS]
 
          Implement 'deps' checking.
 

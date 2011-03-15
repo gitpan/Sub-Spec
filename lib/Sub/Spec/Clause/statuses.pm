@@ -1,6 +1,6 @@
 package Sub::Spec::Clause::statuses;
 BEGIN {
-  $Sub::Spec::Clause::statuses::VERSION = '0.08';
+  $Sub::Spec::Clause::statuses::VERSION = '0.10';
 }
 # ABSTRACT: Specify possible return status codes
 
@@ -15,7 +15,7 @@ Sub::Spec::Clause::statuses - Specify possible return status codes
 
 =head1 VERSION
 
-version 0.08
+version 0.10
 
 =head1 SYNOPSIS
 

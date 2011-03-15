@@ -1,6 +1,6 @@
 package Sub::Spec::Clause::features;
 BEGIN {
-  $Sub::Spec::Clause::features::VERSION = '0.08';
+  $Sub::Spec::Clause::features::VERSION = '0.10';
 }
 # ABSTRACT: Specify subroutine features
 
@@ -19,7 +19,7 @@ Sub::Spec::Clause::features - Specify subroutine features
 
 =head1 VERSION
 
-version 0.08
+version 0.10
 
 =head1 SYNOPSIS
 
@@ -56,9 +56,10 @@ Specifies that subroutine supports undo operation. Undo is like 'reverse', but
 before doing undo you can save undo information first and then in the undo phase
 you use the previously saved undo information.
 
-To undo, caller will add special argument '-undo' => 1. Usually '-state' =>
-$state will also be provided. $state is an state object which must support these
-operations: save($key[, \%opts]) and load($key[, \%opts]).
+To undo, caller will add special argument '-undo' => 1, as well as '-state' =>
+$state. $state is an state object which must support these operations:
+get([\%opts, ]$key), set([\%opts, ]$key => $val[, $key2 => $val, ...]), and
+delete([\%opts, ]$key[, $key2, ...]).
 
 Example:
 
@@ -112,7 +113,7 @@ To undo:
 
 =head2 dry_run => 1
 
-Specify that subroutine supports dry-run (simulation) mode. Example:
+Specifies that subroutine supports dry-run (simulation) mode. Example:
 
  use Log::Any '$log';
 
@@ -136,11 +137,26 @@ Specify that subroutine supports dry-run (simulation) mode. Example:
      [200, "OK"];
  }
 
+=head2 pure => 1
+
+Specifies that subroutine is "pure" and has no "side effects" (these are terms
+from functional programming / computer science). Having a side effect means
+changing something, somewhere (e.g. setting the value of a global variable,
+modifies its arguments, writing some data to disk, changing system date/time,
+etc.) Specifying a function as pure means, among others:
+
+=over 4
+
+=item * the function needs not be involved in undo operation;
+
+=item * you can safely include it during dry run;
+
+=back
+
 =head1 TODO
 
 Some features which might benefit from standardization: transaction/atomicity,
-i18n (is translatable, supported languages, locales), whether it has side
-effects/modifies resources (modify_fs=>1, modify_db=>1, etc).
+i18n (is translatable, supported languages, locales).
 
 =head1 SEE ALSO
 

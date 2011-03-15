@@ -1,6 +1,6 @@
 package Sub::Spec::Clause::args_positional;
 BEGIN {
-  $Sub::Spec::Clause::args_positional::VERSION = '0.08';
+  $Sub::Spec::Clause::args_positional::VERSION = '0.10';
 }
 # ABSTRACT: Specify whether sub accepts named or positional arguments
 
@@ -15,7 +15,7 @@ Sub::Spec::Clause::args_positional - Specify whether sub accepts named or positi
 
 =head1 VERSION
 
-version 0.08
+version 0.10
 
 =head1 SYNOPSIS
 
