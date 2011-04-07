@@ -2,7 +2,7 @@ NAME
     Sub::Spec - Subroutine metadata & wrapping framework
 
 VERSION
-    version 0.10
+    version 0.11
 
 SYNOPSIS
     In your module:
@@ -46,7 +46,7 @@ SYNOPSIS
 
     Use positional arguments (NOT WORKING YET):
 
-     use MyModule pow => {args_positional=>1};
+     use MyModule pow => {args_as=>'ARRAY'};
      $res = pow(2, 10); # [200, "OK", 1024]
 
     Return data only instead of with status code + message (NOT WORKING
@@ -108,7 +108,7 @@ DESCRIPTION
 
     *   positional as well as named arguments calling style
 
-        See the export clause -args_positional in Sub::Spec::Exporter.
+        See the export clause -args_as in Sub::Spec::Exporter.
 
     *   flexible exporting
 
@@ -189,6 +189,10 @@ SEE ALSO
 
     There are a gazillion modules for parameter checking. Data::Sah lists a
     few of them.
+
+  Related non-Perl resources
+    Python Decorators, http://www.python.org/dev/peps/pep-0318/ ,
+    http://wiki.python.org/moin/PythonDecorators .
 
 AUTHOR
     Steven Haryanto <stevenharyanto@gmail.com>

@@ -1,6 +1,6 @@
 package Sub::Spec::Clause::deps;
 BEGIN {
-  $Sub::Spec::Clause::deps::VERSION = '0.10';
+  $Sub::Spec::Clause::deps::VERSION = '0.11';
 }
 # ABSTRACT: Specify subroutine dependencies
 
@@ -114,7 +114,7 @@ Sub::Spec::Clause::deps - Specify subroutine dependencies
 
 =head1 VERSION
 
-version 0.10
+version 0.11
 
 =head1 SYNOPSIS
 
@@ -139,10 +139,10 @@ In your spec:
 
 =head1 DESCRIPTION
 
-The 'deps' clause adds information about subroutine dependency. It is
-extensible so you can specify anything as a dependency, be it another
-subroutine, Perl version and modules, environment variables, etc. It is up to
-some implementor to make use of this information.
+The 'deps' clause adds information about subroutine dependency. It is extensible
+so you can specify anything as a dependency, be it another subroutine, Perl
+version and modules, environment variables, etc. It is up to some implementor to
+make use of this information.
 
 The 'deps' clause is used, for example, by L<Sub::Spec::Runner> to run
 subroutine in dependency order.

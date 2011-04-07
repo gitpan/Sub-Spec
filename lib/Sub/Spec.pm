@@ -1,6 +1,6 @@
 package Sub::Spec;
 BEGIN {
-  $Sub::Spec::VERSION = '0.10';
+  $Sub::Spec::VERSION = '0.11';
 }
 # ABSTRACT: Subroutine metadata & wrapping framework
 
@@ -22,7 +22,7 @@ Sub::Spec - Subroutine metadata & wrapping framework
 
 =head1 VERSION
 
-version 0.10
+version 0.11
 
 =head1 SYNOPSIS
 
@@ -67,7 +67,7 @@ Use your subs in Perl scripts/modules:
 
 Use positional arguments (NOT WORKING YET):
 
- use MyModule pow => {args_positional=>1};
+ use MyModule pow => {args_as=>'ARRAY'};
  $res = pow(2, 10); # [200, "OK", 1024]
 
 Return data only instead of with status code + message (NOT WORKING YET):
@@ -130,7 +130,7 @@ details.
 
 =item * positional as well as named arguments calling style
 
-See the export clause B<-args_positional> in L<Sub::Spec::Exporter>.
+See the export clause B<-args_as> in L<Sub::Spec::Exporter>.
 
 =item * flexible exporting
 
@@ -219,6 +219,11 @@ You can check out L<Sub::Attempts> for retries.
 
 There are a gazillion modules for parameter checking. L<Data::Sah> lists a few
 of them.
+
+=head2 Related non-Perl resources
+
+Python Decorators, http://www.python.org/dev/peps/pep-0318/ ,
+http://wiki.python.org/moin/PythonDecorators .
 
 =head1 AUTHOR
 

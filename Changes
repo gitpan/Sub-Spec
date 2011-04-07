@@ -1,5 +1,17 @@
 Revision history for Sub::Spec
 
+0.11     2011-04-07
+
+         [INCOMPATIBLE CHANGES]
+
+         - 'args_positional' clause now becomes 'args_as', the spec makes it
+           possible for subs to accept args object instead of array/hash.
+
+         - changes for undo. Caller now sets special arg -undo_action and no
+           longer provides -state. Subs provide their own undo info and return
+           it to the caller. Add redo.
+
+
 0.10     2011-03-15
 
          Add missing requirement to Log::Any.

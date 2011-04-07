@@ -1,6 +1,6 @@
 package Sub::Spec::Clause::result_naked;
 BEGIN {
-  $Sub::Spec::Clause::result_naked::VERSION = '0.10';
+  $Sub::Spec::Clause::result_naked::VERSION = '0.11';
 }
 # ABSTRACT: Specify whether subroutine only returns result or full response
 
@@ -15,7 +15,7 @@ Sub::Spec::Clause::result_naked - Specify whether subroutine only returns result
 
 =head1 VERSION
 
-version 0.10
+version 0.11
 
 =head1 SYNOPSIS
 

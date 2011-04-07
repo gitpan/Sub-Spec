@@ -8,7 +8,7 @@ README
 dist.ini
 lib/Sub/Spec.pm
 lib/Sub/Spec/Clause/args.pm
-lib/Sub/Spec/Clause/args_positional.pm
+lib/Sub/Spec/Clause/args_as.pm
 lib/Sub/Spec/Clause/deps.pm
 lib/Sub/Spec/Clause/features.pm
 lib/Sub/Spec/Clause/result.pm
