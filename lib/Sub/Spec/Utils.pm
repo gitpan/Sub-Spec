@@ -1,6 +1,6 @@
 package Sub::Spec::Utils;
 BEGIN {
-  $Sub::Spec::Utils::VERSION = '0.11';
+  $Sub::Spec::Utils::VERSION = '0.12';
 }
 
 use 5.010;
@@ -18,7 +18,7 @@ sub _parse_schema {
     my $type = $schema->[0];
     $type =~ s/\*$// and $schema->[1]{required} = 1;
     die "BUG: Can't handle type `$type` yet"
-        unless $type =~ /^(int|float|bool|str|array|hash|any)$/;
+        unless $type =~ /^(int|float|bool|str|array|hash|any|code)$/;
 
     {type=>$type, attr_hashes=>[$schema->[1]]};
 }
@@ -34,7 +34,7 @@ Sub::Spec::Utils
 
 =head1 VERSION
 
-version 0.11
+version 0.12
 
 =head1 AUTHOR
 

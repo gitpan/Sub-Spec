@@ -1,5 +1,16 @@
 Revision history for Sub::Spec
 
+0.12     2011-04-18
+
+         [ENHANCEMENTS]
+
+         - Spec: undo feature: Specify -undo_hint
+
+         [ETC]
+
+         - Change terminology: undo/redo info -> undo/redo data.
+
+
 0.11     2011-04-07
 
          [INCOMPATIBLE CHANGES]

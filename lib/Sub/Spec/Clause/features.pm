@@ -1,6 +1,6 @@
 package Sub::Spec::Clause::features;
 BEGIN {
-  $Sub::Spec::Clause::features::VERSION = '0.11';
+  $Sub::Spec::Clause::features::VERSION = '0.12';
 }
 # ABSTRACT: Specify subroutine features
 
@@ -19,7 +19,7 @@ Sub::Spec::Clause::features - Specify subroutine features
 
 =head1 VERSION
 
-version 0.11
+version 0.12
 
 =head1 SYNOPSIS
 
@@ -78,51 +78,57 @@ operation. Undo is similar to 'reverse' but needs some state to be saved and
 restored for do/undo operation, while reverse can work solely from the
 arguments.
 
-Caller must provide one or more special arguments: -undo_action, -undo_info,
--redo_info when dealing with do/undo stuffs.
+Caller must provide one or more special arguments: -undo_action, -undo_hint,
+-undo_data, -redo_data when dealing with do/undo stuffs.
 
 =head3 do
 
-To perform normal operation, -undo_action must be set to 'do'. Sub must save
-undo information, perform action, and return result along with saved undo info
-in the undo_info metadata, example:
+To perform normal operation, caller must set -undo_action to 'do' and optionally
+pass -undo_hint for hints on how to save undo data (e.g. if undo_data is to be
+saved on a file, -undo_hint can contain filename or base directory). Sub must
+save undo data, perform action, and return result along with saved undo data in
+the response metadata (4th argument of response), example:
 
- return [200, "OK", $result, {undo_info=>$undo_info}];
+ return [200, "OK", $result, {undo_data=>$undo_data}];
 
-Undo info should contain information (or reference to information) to restore to
+Undo data should contain information (or reference to information) to restore to
 previous state later. This information should be persistent (e.g. in a
-file/database) when necessary. For example, if undo information is saved in a
-file, undo_info can contain the filename. If undo information is saved in a
-memory structure, undo_info can refer to this memory structure, and so on. Undo
-info should be serializable. Caller should store this undo info in the undo
-stack (note: undo stack management is the caller's task).
+file/database) when necessary. For example, if undo data is saved in a file,
+undo_data can contain the filename. If undo data is saved in a memory structure,
+undo_data can refer to this memory structure, and so on. Undo data should be
+serializable. Caller should store this undo data in the undo stack (note: undo
+stack management is the caller's task).
 
 If -undo_action is false/undef, sub must assume caller want to perform action
-but without saving undo information.
+but without saving undo data.
 
 =head3 undo
 
 To perform an undo, caller must set -undo_action to 'undo' and pass back the
-undo info in -undo_info. Sub must restore previous state using undo info (or
-return 412 if undo info is invalid/unusable). After a successful undo, sub must
-return 200. Caller should mark that the undo info has already been used
-(undone). A redo information can be provided by the sub if necessary:
+undo data in -undo_data. Sub must restore previous state using undo data (or
+return 412 if undo data is invalid/unusable). After a successful undo, sub must
+return 200. A redo data can be provided in the response metadata by the sub if
+necessary:
 
- return [200, "OK", undef, {redo_info=>...}];
+ return [200, "OK", undef, {redo_data=>...}];
+
+Caller should then mark that the undo data has already been used (action has
+been undone).
 
 =head3 redo
 
 To redo a previously undone action, caller must set -undo_action to 'redo' and
--redo_info to redo information given by the sub when doing undo previously (if
-any). Sub should return 412 if redo info is invalid/unusable. Sub must redo the
-action and can optionally return a new undo_info.
+-redo_data to redo data given by the sub when doing undo previously (if any),
+and also optionally -undo_hint. Sub should return 412 if redo data is
+invalid/unusable. Sub must redo the action and can optionally return a new
+undo_data.
 
- return [200, "OK", $result, {undo_info=>...}];
+ return [200, "OK", $result, {undo_data=>...}];
 
 After a successful redo, action can be undone again using the previous (or new)
-undo_info.
+undo_data.
 
-Example (in the example, undo info is only stored in memory):
+Example (in this example, undo data is only stored in memory):
 
  use Cwd qw(abs_path);
  use File::Slurp;
@@ -136,24 +142,41 @@ Example (in the example, undo info is only stored in memory):
      my %args        = @_;
      my $path        = $args{path};
      my $undo_action = $args{-undo_action} // '';
-     my $undo_info   = $args{-undo_info};
+     my $undo_data   = $args{-undo_data};
 
      $path = abs_path($path)
          or return [500, "Can't get file absolute path"];
 
      if ($undo_action eq 'undo') {
-         write_file $path, $undo_info->{content}; # restore original content
-         utime undef, $undo_info->{mtime}, $path; # as well as original mtime
+         write_file $path, $undo_data->{content}; # restore original content
+         utime undef, $undo_data->{mtime}, $path; # as well as original mtime
          return [200, "OK"];
      } else {
          my @st = stat($path)
              or return [500, "Can't stat file"];
          my $content = read_file($path);
-         my $undo_info = {mtime=>$st[9], content=>$content};
+         my $undo_data = {mtime=>$st[9], content=>$content};
          write_file $path, lc($content);
-         return [200, "OK", undef, {undo_info=>$undo_info}];
+         return [200, "OK", undef, {undo_data=>$undo_data}];
      }
  }
+
+To perform action, caller calls lc_file() and store the undo data:
+
+ my $res = lc_file(path=>"/foo/bar", -undo_action=>"do");
+ die "Failed: $res->[0] - $res->[1]" unless $res->[0] == 200;
+ my $undo_data = $res->[3]{undo_data};
+
+To perform undo:
+
+ $res = lc_file(path=>"/foo/bar", -undo_action=>"undo", -undo_data=>$undo_data);
+ die "Can't undo: $res->[0] - $res->[1]" unless $res->[0] == 200;
+ my $redo_data = $res->[3]{redo_data};
+
+To perform redo:
+
+ lc_file(path=>"/foo/bar", -undo_action=>"redo", -redo_data=>$redo_data);
+ die "Can't redo: $res->[0] - $res->[1]" unless $res->[0] == 200;
 
 =head2 dry_run => 1
 

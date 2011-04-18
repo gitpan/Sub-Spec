@@ -1,6 +1,6 @@
 package Sub::Spec::Clause::args_as;
 BEGIN {
-  $Sub::Spec::Clause::args_as::VERSION = '0.11';
+  $Sub::Spec::Clause::args_as::VERSION = '0.12';
 }
 # ABSTRACT: Specify how sub accepts arguments
 
@@ -15,7 +15,7 @@ Sub::Spec::Clause::args_as - Specify how sub accepts arguments
 
 =head1 VERSION
 
-version 0.11
+version 0.12
 
 =head1 SYNOPSIS
 
