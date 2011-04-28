@@ -2,7 +2,7 @@ NAME
     Sub::Spec - Subroutine metadata & wrapping framework
 
 VERSION
-    version 0.12
+    version 0.13
 
 SYNOPSIS
     In your module:
@@ -148,6 +148,11 @@ DESCRIPTION
 
     *   logging
 
+    *   a simple undo framework
+
+        See Sub::Spec::Clause::features ('undo' feature). Also see the
+        'reverse' feature for even simpler mechanism, if your sub applies.
+
     *   and more ...
 
 CLAUSES
@@ -176,6 +181,24 @@ FAQ
     See Sub::Spec::Manual::FAQ
 
 SEE ALSO
+  Example applications/modules
+    The following applications/modules, among others, are already using
+    Sub::Spec to varying degrees:
+
+    *   File::RsyBak, Git::Bunch, Org::Parser
+
+        Uses Sub::Spec::CmdLine to easily turn the subs into command-line
+        app. Generates POD documentation from sub specs.
+
+    *   Setup:: modules family, e.g. Setup::Symlink, Setup::File.
+
+        Uses the undo framework and dry-run feature. Generates POD
+        documentation from sub specs.
+
+    *   Array::Find, Parse::PhoneNumber::ID
+
+        Generates POD documentation from sub specs.
+
   Modules used
     Data::Sah for schema checking.
 

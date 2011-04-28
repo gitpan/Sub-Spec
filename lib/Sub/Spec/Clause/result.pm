@@ -1,6 +1,6 @@
 package Sub::Spec::Clause::result;
 BEGIN {
-  $Sub::Spec::Clause::result::VERSION = '0.12';
+  $Sub::Spec::Clause::result::VERSION = '0.13';
 }
 # ABSTRACT: Specify sub result
 
@@ -15,7 +15,7 @@ Sub::Spec::Clause::result - Specify sub result
 
 =head1 VERSION
 
-version 0.12
+version 0.13
 
 =head1 SYNOPSIS
 

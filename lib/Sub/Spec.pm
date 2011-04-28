@@ -1,6 +1,6 @@
 package Sub::Spec;
 BEGIN {
-  $Sub::Spec::VERSION = '0.12';
+  $Sub::Spec::VERSION = '0.13';
 }
 # ABSTRACT: Subroutine metadata & wrapping framework
 
@@ -22,7 +22,7 @@ Sub::Spec - Subroutine metadata & wrapping framework
 
 =head1 VERSION
 
-version 0.12
+version 0.13
 
 =head1 SYNOPSIS
 
@@ -167,6 +167,11 @@ See L<Sub::Spec::Clause::retry>.
 
 =item * logging
 
+=item * a simple undo framework
+
+See L<Sub::Spec::Clause::features> ('undo' feature). Also see the 'reverse'
+feature for even simpler mechanism, if your sub applies.
+
 =item * and more ...
 
 =back
@@ -203,6 +208,29 @@ L<Sub::Spec::Manual::Spec> for more information).
 See L<Sub::Spec::Manual::FAQ>
 
 =head1 SEE ALSO
+
+=head2 Example applications/modules
+
+The following applications/modules, among others, are already using Sub::Spec to
+varying degrees:
+
+=over 4
+
+=item * L<File::RsyBak>, L<Git::Bunch>, L<Org::Parser>
+
+Uses Sub::Spec::CmdLine to easily turn the subs into command-line app. Generates
+POD documentation from sub specs.
+
+=item * Setup:: modules family, e.g. L<Setup::Symlink>, L<Setup::File>.
+
+Uses the undo framework and dry-run feature. Generates POD documentation from
+sub specs.
+
+=item * L<Array::Find>, L<Parse::PhoneNumber::ID>
+
+Generates POD documentation from sub specs.
+
+=back
 
 =head2 Modules used
 

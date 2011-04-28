@@ -1,5 +1,15 @@
 Revision history for Sub::Spec
 
+0.13     2011-04-28
+
+         [SPEC]
+
+         - Undo feature: to perform redo (effectively, undo of undo), one no
+           longer passes -undo_action=>'redo', but instead just
+           -undo_action=>'undo' with -undo_data provided from previous undo
+           action.
+
+
 0.12     2011-04-18
 
          [ENHANCEMENTS]

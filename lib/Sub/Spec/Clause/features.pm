@@ -1,6 +1,6 @@
 package Sub::Spec::Clause::features;
 BEGIN {
-  $Sub::Spec::Clause::features::VERSION = '0.12';
+  $Sub::Spec::Clause::features::VERSION = '0.13';
 }
 # ABSTRACT: Specify subroutine features
 
@@ -19,7 +19,7 @@ Sub::Spec::Clause::features - Specify subroutine features
 
 =head1 VERSION
 
-version 0.12
+version 0.13
 
 =head1 SYNOPSIS
 
@@ -79,15 +79,15 @@ restored for do/undo operation, while reverse can work solely from the
 arguments.
 
 Caller must provide one or more special arguments: -undo_action, -undo_hint,
--undo_data, -redo_data when dealing with do/undo stuffs.
-
-=head3 do
+-undo_data when dealing with do/undo stuffs.
 
 To perform normal operation, caller must set -undo_action to 'do' and optionally
-pass -undo_hint for hints on how to save undo data (e.g. if undo_data is to be
-saved on a file, -undo_hint can contain filename or base directory). Sub must
-save undo data, perform action, and return result along with saved undo data in
-the response metadata (4th argument of response), example:
+pass -undo_hint for hints on how to save undo data. You should consult each
+function's documentation as undo hint depends on each function (e.g. if
+undo_data is to be saved on a file, -undo_hint can contain filename or base
+directory). Function must save undo data, perform action, and return result
+along with saved undo data in the response metadata (4th argument of response),
+example:
 
  return [200, "OK", $result, {undo_data=>$undo_data}];
 
@@ -102,31 +102,13 @@ stack management is the caller's task).
 If -undo_action is false/undef, sub must assume caller want to perform action
 but without saving undo data.
 
-=head3 undo
-
 To perform an undo, caller must set -undo_action to 'undo' and pass back the
 undo data in -undo_data. Sub must restore previous state using undo data (or
 return 412 if undo data is invalid/unusable). After a successful undo, sub must
-return 200. A redo data can be provided in the response metadata by the sub if
-necessary:
+return 200. Sub should also return undo_data, to undo the undo (effectively,
+redo):
 
- return [200, "OK", undef, {redo_data=>...}];
-
-Caller should then mark that the undo data has already been used (action has
-been undone).
-
-=head3 redo
-
-To redo a previously undone action, caller must set -undo_action to 'redo' and
--redo_data to redo data given by the sub when doing undo previously (if any),
-and also optionally -undo_hint. Sub should return 412 if redo data is
-invalid/unusable. Sub must redo the action and can optionally return a new
-undo_data.
-
- return [200, "OK", $result, {undo_data=>...}];
-
-After a successful redo, action can be undone again using the previous (or new)
-undo_data.
+ return [200, "OK", undef, {undo_data=>...}];
 
 Example (in this example, undo data is only stored in memory):
 
@@ -171,12 +153,6 @@ To perform undo:
 
  $res = lc_file(path=>"/foo/bar", -undo_action=>"undo", -undo_data=>$undo_data);
  die "Can't undo: $res->[0] - $res->[1]" unless $res->[0] == 200;
- my $redo_data = $res->[3]{redo_data};
-
-To perform redo:
-
- lc_file(path=>"/foo/bar", -undo_action=>"redo", -redo_data=>$redo_data);
- die "Can't redo: $res->[0] - $res->[1]" unless $res->[0] == 200;
 
 =head2 dry_run => 1
 
