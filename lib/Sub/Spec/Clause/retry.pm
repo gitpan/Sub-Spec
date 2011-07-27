@@ -1,7 +1,4 @@
 package Sub::Spec::Clause::retry;
-BEGIN {
-  $Sub::Spec::Clause::retry::VERSION = '0.13';
-}
 # ABSTRACT: Retry subroutine upon failure
 
 1;
@@ -15,7 +12,7 @@ Sub::Spec::Clause::retry - Retry subroutine upon failure
 
 =head1 VERSION
 
-version 0.13
+version 0.14
 
 =head1 SYNOPSIS
 

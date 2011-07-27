@@ -1,7 +1,4 @@
 package Sub::Spec::Clause::deps;
-BEGIN {
-  $Sub::Spec::Clause::deps::VERSION = '0.13';
-}
 # ABSTRACT: Specify subroutine dependencies
 
 use 5.010;
@@ -114,7 +111,7 @@ Sub::Spec::Clause::deps - Specify subroutine dependencies
 
 =head1 VERSION
 
-version 0.13
+version 0.14
 
 =head1 SYNOPSIS
 

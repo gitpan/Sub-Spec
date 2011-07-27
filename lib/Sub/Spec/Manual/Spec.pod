@@ -14,7 +14,7 @@ Sub::Spec::Manual::Spec - Spec for sub spec
 
 =head1 VERSION
 
-version 0.13
+version 0.14
 
 =head1 DESCRIPTION
 

@@ -1,7 +1,4 @@
 package Sub::Spec::Clause::features;
-BEGIN {
-  $Sub::Spec::Clause::features::VERSION = '0.13';
-}
 # ABSTRACT: Specify subroutine features
 
 use 5.010;
@@ -19,7 +16,7 @@ Sub::Spec::Clause::features - Specify subroutine features
 
 =head1 VERSION
 
-version 0.13
+version 0.14
 
 =head1 SYNOPSIS
 
