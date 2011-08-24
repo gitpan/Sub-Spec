@@ -1,5 +1,11 @@
 Revision history for Sub::Spec
 
+0.15     2011-08-24
+
+         No spec changes. Schema normalization changes ('attr_hashes' becomes
+         'clause_sets'). Some other minor changes.
+
+
 0.14     2011-07-27
 
          No spec changes. Some build fixes and documentation additions/updates.

@@ -1,0 +1,104 @@
+package Sub::Spec::Manual::Status; # just to make PodWeaver happy atm
+
+1;
+# ABSTRACT: Status codes
+
+
+=pod
+
+=head1 NAME
+
+Sub::Spec::Manual::Status - Status codes
+
+=head1 VERSION
+
+version 0.15
+
+=head1 DESCRIPTION
+
+B<This is a temporary place, will be moved somewhere else in the future.>
+
+Sub::Spec-following subroutines should return the following response: [STATUS,
+MESSAGE, RESULT] (unless when it declares a 'result_naked' clause in the spec,
+in which case it should just return RESULT and the wrapper will add STATUS and
+MESSAGE as necessary.
+
+STATUS is modeled after HTTP response status code, a 3-digit integer, ranging
+from 100-599. This documentation contains a guide on what status codes to use on
+which occassions.
+
+=head2 1xx code
+
+Currently not used.
+
+=head2 2xx code
+
+200 should be used to mean success.
+
+206 can be used to signal partial content, for example: a read_file() sub which
+accepts 'byte_start' and 'byte_end' arguments should return 206 when only
+partial file content is returned. But in general, use 200 as some clients will
+simply check for this exact code (instead of checking for range 200-299).
+
+=head2 3xx code
+
+301 (moved) can be used to redirect clients to alternate location, though I
+haven't used it yet.
+
+304 (not modified, nothing done). Used for example by setup subroutines to
+indicate that nothing is being modified (see Setup::* modules in CPAN).
+
+=head2 4xx code
+
+400 (bad request, bad arguments) should be returned when the sub encountered
+invalid input (arguments). The wrapper code will return this code when arguments
+fail schema validation.
+
+403 (forbidden, access denied).
+
+404 not found. Can be used for example: a get_user() sub which accepts
+username/userid argument and when the user is not found.
+
+Note: In general, a delete_object() sub should return 200 (or perhaps 304, but
+200 is preferred) instead of 404 when the object specified by the user is not
+found, since the goal of the delete function is reached anyway.
+
+408 (request timeout)
+
+409 (conflict) can be used, for example: a create_user() function when receiving
+an already existing username.
+
+412 (precondition failed).
+
+=head2 5xx code
+
+500 is the general code to use when a failure occurs during the execution of
+sub. For example, when a delete_file() sub fails to delete specified file
+(though it can return 403 which is more specific).
+
+501 (not implemented)
+
+503 (service unavailable)
+
+507 (insufficient storage)
+
+53x (bad spec) is used when there is something wrong with the spec.
+
+Try not to use code above 555.
+
+=head1 AUTHOR
+
+Steven Haryanto <stevenharyanto@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2011 by Steven Haryanto.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
+
+
+__END__
+

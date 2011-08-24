@@ -18,6 +18,7 @@ lib/Sub/Spec/Clause/statuses.pm
 lib/Sub/Spec/Clause/timeout.pm
 lib/Sub/Spec/Exporter.pm
 lib/Sub/Spec/Manual/Spec.pod
+lib/Sub/Spec/Manual/Status.pod
 lib/Sub/Spec/Utils.pm
 t/00-compile.t
 t/clause-deps-check.t

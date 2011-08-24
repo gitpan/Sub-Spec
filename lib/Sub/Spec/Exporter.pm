@@ -12,7 +12,7 @@ Sub::Spec::Exporter - Flexible and painless exporting for your subs
 
 =head1 VERSION
 
-version 0.14
+version 0.15
 
 =head1 DESCRIPTION
 

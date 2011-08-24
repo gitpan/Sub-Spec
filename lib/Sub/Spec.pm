@@ -1,6 +1,6 @@
 package Sub::Spec;
 
-our $VERSION = '0.14'; # VERSION
+our $VERSION = '0.15'; # VERSION
 
 use 5.010;
 use strict;
@@ -18,7 +18,7 @@ Sub::Spec - Subroutine metadata & wrapping framework
 
 =head1 VERSION
 
-version 0.14
+version 0.15
 
 =head1 SYNOPSIS
 
@@ -156,13 +156,13 @@ Creating an API from your subs is dead easy. See L<Sub::Spec::HTTP::Server>.
 
 =item * generation of API documentation (POD, etc)
 
-See L<Sub::Spec::Export::Pod> on how to generate POD for your functions and
+See L<Sub::Spec::To::Pod> on how to generate POD for your functions and
 L<Pod::Weaver::Plugin::SubSpec> on how to do this when building dist with
 L<Dist::Zilla>.
 
-There is also L<Sub::Spec::Export::Text>, used by L<Sub::Spec::CmdLine> to
-generate text help message (--help / usage), and other format exporters like
-L<Sub::Spec::Export::HTML> and L<Sub::Spec::Export::Org>.
+There is also L<Sub::Spec::To::Text>, used by L<Sub::Spec::CmdLine> to generate
+text help message (--help / usage), and other format exporters like
+L<Sub::Spec::To::HTML> and L<Sub::Spec::To::Org>.
 
 =item * execution time limits
 
@@ -289,14 +289,13 @@ interactive console prompts.
 
 I also envision something like getting args from a GUI/TUI dialog.
 
-=item * Sub::Spec::Export::*
+=item * Sub::Spec::To::*
 
-Not to be confused with Sub::Spec::Exporter, these modules convert (export) sub
-spec to various other outputs, example: L<Sub::Spec::Export::Pod> (e.g. to be
-inserted into Perl module files; see L<Pod::Weaver::Plugin::SubSpec>),
-L<Sub::Spec::Export::Text> (e.g. for --help/usage message),
-L<Sub::Spec::Export::HTML> and L<Sub::Spec::Export::Org> (e.g. to generate API
-documentation).
+These modules convert (export) sub spec to various other outputs, example:
+L<Sub::Spec::To::Pod> (e.g. the generated POD is to be inserted into Perl module
+files; see L<Pod::Weaver::Plugin::SubSpec>), L<Sub::Spec::To::Text> (e.g. for
+generating --help/usage message), L<Sub::Spec::To::HTML> and
+L<Sub::Spec::To::Org> (e.g. to generate API documentation).
 
 =item * L<Sub::Spec::Runner>
 
@@ -330,8 +329,6 @@ See its documentation for more details.
 
 A helper module for Sub::Spec::CmdLine, to provide bash completion for programs
 using spec'ed functions.
-
-=item * L<Sub::Spec::Pod>
 
 =item * Sub::Spec::HTTP::*
 

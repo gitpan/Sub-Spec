@@ -12,7 +12,7 @@ Sub::Spec::Clause::timeout - Limit subroutine execution
 
 =head1 VERSION
 
-version 0.14
+version 0.15
 
 =head1 SYNOPSIS
 

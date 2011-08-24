@@ -2,7 +2,7 @@ NAME
     Sub::Spec - Subroutine metadata & wrapping framework
 
 VERSION
-    version 0.14
+    version 0.15
 
 SYNOPSIS
     Write your subroutine and add a metadata ($SPEC{subname}):
@@ -141,13 +141,13 @@ DESCRIPTION
 
     *   generation of API documentation (POD, etc)
 
-        See Sub::Spec::Export::Pod on how to generate POD for your functions
-        and Pod::Weaver::Plugin::SubSpec on how to do this when building
-        dist with Dist::Zilla.
+        See Sub::Spec::To::Pod on how to generate POD for your functions and
+        Pod::Weaver::Plugin::SubSpec on how to do this when building dist
+        with Dist::Zilla.
 
-        There is also Sub::Spec::Export::Text, used by Sub::Spec::CmdLine to
+        There is also Sub::Spec::To::Text, used by Sub::Spec::CmdLine to
         generate text help message (--help / usage), and other format
-        exporters like Sub::Spec::Export::HTML and Sub::Spec::Export::Org.
+        exporters like Sub::Spec::To::HTML and Sub::Spec::To::Org.
 
     *   execution time limits
 
@@ -262,14 +262,14 @@ MODULES FAMILY
 
         I also envision something like getting args from a GUI/TUI dialog.
 
-    *   Sub::Spec::Export::*
+    *   Sub::Spec::To::*
 
-        Not to be confused with Sub::Spec::Exporter, these modules convert
-        (export) sub spec to various other outputs, example:
-        Sub::Spec::Export::Pod (e.g. to be inserted into Perl module files;
-        see Pod::Weaver::Plugin::SubSpec), Sub::Spec::Export::Text (e.g. for
-        --help/usage message), Sub::Spec::Export::HTML and
-        Sub::Spec::Export::Org (e.g. to generate API documentation).
+        These modules convert (export) sub spec to various other outputs,
+        example: Sub::Spec::To::Pod (e.g. the generated POD is to be
+        inserted into Perl module files; see Pod::Weaver::Plugin::SubSpec),
+        Sub::Spec::To::Text (e.g. for generating --help/usage message),
+        Sub::Spec::To::HTML and Sub::Spec::To::Org (e.g. to generate API
+        documentation).
 
     *   Sub::Spec::Runner
 
@@ -303,8 +303,6 @@ MODULES FAMILY
 
         A helper module for Sub::Spec::CmdLine, to provide bash completion
         for programs using spec'ed functions.
-
-    *   Sub::Spec::Pod
 
     *   Sub::Spec::HTTP::*
 

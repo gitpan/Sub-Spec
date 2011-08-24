@@ -15,9 +15,9 @@ sub _parse_schema {
     my $type = $schema->[0];
     $type =~ s/\*$// and $schema->[1]{required} = 1;
     die "BUG: Can't handle type `$type` yet"
-        unless $type =~ /^(int|float|bool|str|array|hash|any|code)$/;
+        unless $type =~ /^(int|float|bool|str|array|hash|any|code|obj)$/;
 
-    {type=>$type, attr_hashes=>[$schema->[1]]};
+    {type=>$type, clause_sets=>[$schema->[1]]};
 }
 
 1;
@@ -31,7 +31,7 @@ Sub::Spec::Utils
 
 =head1 VERSION
 
-version 0.14
+version 0.15
 
 =head1 AUTHOR
 
