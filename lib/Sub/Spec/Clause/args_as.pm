@@ -12,7 +12,7 @@ Sub::Spec::Clause::args_as - Specify how sub accepts arguments
 
 =head1 VERSION
 
-version 0.15
+version 1.0.0
 
 =head1 SYNOPSIS
 

@@ -1,5 +1,11 @@
 Revision history for Sub::Spec
 
+1.0.0    2011-08-28
+
+         No spec changes. Change versioning scheme to
+         <major>.<minor>.<revision>. Specification version is <major>.<minor>.
+
+
 0.15     2011-08-24
 
          No spec changes. Schema normalization changes ('attr_hashes' becomes

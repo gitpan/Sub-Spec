@@ -111,7 +111,7 @@ Sub::Spec::Clause::deps - Specify subroutine dependencies
 
 =head1 VERSION
 
-version 0.15
+version 1.0.0
 
 =head1 SYNOPSIS
 

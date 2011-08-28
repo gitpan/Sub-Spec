@@ -1,6 +1,6 @@
 package Sub::Spec;
 
-our $VERSION = '0.15'; # VERSION
+our $VERSION = '1.0.0'; # VERSION
 
 use 5.010;
 use strict;
@@ -18,7 +18,7 @@ Sub::Spec - Subroutine metadata & wrapping framework
 
 =head1 VERSION
 
-version 0.15
+version 1.0.0
 
 =head1 SYNOPSIS
 
@@ -185,6 +185,10 @@ More useful and interesting things to come.
 
 =back
 
+=head1 SPECIFICATION VERSION
+
+1.0
+
 =head1 WHAT ALREADY WORKS AND WHAT HAS NOT
 
 While the Sub::Spec specification is stabilizing, implementation-wise there are
@@ -334,24 +338,23 @@ using spec'ed functions.
 
 These modules all relate to providing remote sub call access via HTTP.
 
-L<Sub::Spec::HTTP::Server> serves sub call requests via HTTP; it is a PSGI
-application. There are also several middleware in Sub::Spec::HTTP::Middleware::*
-to provide functionalities like authentication/authorization. Suitable for
-providing remote API access.
+L<Sub::Spec::HTTP> is the specification. It provides a standard to cooperate
+among different languages/implementations.
 
-You can call any HTTP client to use the API service built using the tool
+L<Sub::Spec::HTTP::Server> serves sub call requests via HTTP; it is a PSGI
+application. There are also several middleware in Plack::HTTP::Middleware::* to
+provide functionalities like authentication/authorization/custom request
+parsing. Suitable for providing remote API access.
+
+You can use any HTTP client to use the API service built using the tool
 mentioned above, but L<Sub::Spec::HTTP::Client> provides some convenience and
 options.
 
-=item * Sub::Spec::Loader::*
+=item * Sub::Spec::FromURI::*
 
-Reserved for modules that load sub spec from some sources (e.g. Perl modules
-require()'d, files/databases, or whatever).
-
-=item * Sub::Spec::OO
-
-Reserved for module that provides an OO-interface to sub spec, to query its
-(meta)data.
+Let us refer to local or remote (HTTP) subroutines/specs/subroutine calls using
+a URI string. For example, L<Sub::Spec::FromURI::pm> to refer to local subs,
+L<Sub::Spec::FromURI::http> to refer to remote subs over HTTP.
 
 =item * Sub::Spec::?
 
