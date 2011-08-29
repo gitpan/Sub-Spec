@@ -12,7 +12,7 @@ Sub::Spec::Clause::result - Specify sub result
 
 =head1 VERSION
 
-version 1.0.0
+version 1.0.1
 
 =head1 SYNOPSIS
 

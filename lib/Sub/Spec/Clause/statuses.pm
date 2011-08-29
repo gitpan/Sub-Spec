@@ -12,7 +12,7 @@ Sub::Spec::Clause::statuses - Specify possible return status codes
 
 =head1 VERSION
 
-version 1.0.0
+version 1.0.1
 
 =head1 SYNOPSIS
 

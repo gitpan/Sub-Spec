@@ -12,7 +12,7 @@ Sub::Spec::Clause::result_naked - Specify whether subroutine only returns result
 
 =head1 VERSION
 
-version 1.0.0
+version 1.0.1
 
 =head1 SYNOPSIS
 

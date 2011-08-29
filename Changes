@@ -1,5 +1,19 @@
 Revision history for Sub::Spec
 
+1.0.1    2011-08-29
+
+         [INCOMPATIBLE CHANGES]
+
+         - 'description' clause now in Org format.
+
+         [ENHANCEMENTS]
+
+         - Updated documentation: modules list.
+
+         - Add utility function: str_log_level() (moved from
+           Sub-Spec-HTTP-Server).
+
+
 1.0.0    2011-08-28
 
          No spec changes. Change versioning scheme to

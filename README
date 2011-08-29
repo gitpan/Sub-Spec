@@ -2,7 +2,7 @@ NAME
     Sub::Spec - Subroutine metadata & wrapping framework
 
 VERSION
-    version 1.0.0
+    version 1.0.1
 
 SYNOPSIS
     Write your subroutine and add a metadata ($SPEC{subname}):
@@ -80,7 +80,7 @@ SYNOPSIS
      Error: Missing required argument exp
 
     Create HTTP REST API from your subs (see Sub::Spec::HTTP::Server and
-    Sub::Spec::HTTP::Client for more details):
+    Sub::Spec::URI::http for more details):
 
      % cat apid.psgi
      #!/usr/bin/perl
@@ -197,20 +197,21 @@ CLAUSES
     see respective Sub::Spec::Clause::<CLAUSE_NAME>, e.g.
     Sub::Spec::Clause::args, etc.
 
-    *   name
+    *   name => STR
 
         The name of the subroutine. Useful for generating help/usage
         information, or when aliasing subroutines (and reusing the spec) and
         finding out the canonical/original name of the subroutine.
 
-    *   summary
+    *   summary => STR
 
         A one-line summary. It should be plain text without any markup.
 
-    *   description
+    *   description => STR
 
-        A longer description. Currently the format of the text inside is not
-        yet specified. It is probably going to be Markdown, not POD/HTML.
+        A longer description. It should be text in Org format. See
+        http://orgmode.org/ or Org::Parser for more details on the Org
+        format.
 
     Sub::Spec is extensible, you can add your own clauses (see
     Sub::Spec::Manual::Spec for more information).
@@ -224,22 +225,17 @@ MODULES FAMILY
         The main module, contains specification, general documentation, and
         current best practice.
 
-    *   Sub::Spec::Schema
+    *   Sub::Spec::BashComplete
 
-        This module name is reserved, it will contain the Data::Sah's schema
-        for the sub spec, so you can validate your sub specs with it.
+        A helper module for Sub::Spec::CmdLine, to provide bash completion
+        for programs using spec'ed functions.
 
-        Not yet implemented.
+    *   Sub::Spec::CmdLine
 
-    *   Sub::Spec::Wrapper
-
-        The module that actually generates the wrapper code for subroutines
-        (including code for validating arguments and all the other code
-        necessary to implement the other spec clauses). Normally, it will be
-        used through Sub::Spec::Exporter or some kind of invoker in your
-        module.
-
-        Not yet implemented.
+        This module provides an easy way to execute your subs from the
+        command line, and even provides extra support like bash completion.
+        Internally, it is just a composition of Sub::Spec::GetArgs::Argv,
+        Sub::Spec::Runner, Sub::Spec::BashComplete.
 
     *   Sub::Spec::Exporter
 
@@ -251,6 +247,15 @@ MODULES FAMILY
         Not yet implemented. For now I personally still use the good ol'
         Exporter. As a recommended best practice, do not export anything by
         default. Put everything worth exporting into @EXPORT_OK.
+
+    *   Sub::Spec::Gen:*
+
+        These modules generate sub spec (and/or the sub code) from some
+        other, probably higher-level or more abstract, specification.
+        Example: Sub::Spec::Gen::ReadTable.
+
+        Someday I also plan to write Sub::Spec::Gen::ReadTable::SQL, to
+        generate table access functions from a SQL database table.
 
     *   Sub::Spec::GetArgs::*
 
@@ -264,48 +269,6 @@ MODULES FAMILY
         from interactive console prompts.
 
         I also envision something like getting args from a GUI/TUI dialog.
-
-    *   Sub::Spec::To::*
-
-        These modules convert (export) sub spec to various other outputs,
-        example: Sub::Spec::To::Pod (e.g. the generated POD is to be
-        inserted into Perl module files; see Pod::Weaver::Plugin::SubSpec),
-        Sub::Spec::To::Text (e.g. for generating --help/usage message),
-        Sub::Spec::To::HTML and Sub::Spec::To::Org (e.g. to generate API
-        documentation).
-
-    *   Sub::Spec::Runner
-
-        With Sub::Spec you can specify dependencies between subs (and to
-        external objects like an OS software package, a binary, etc). This
-        module can be used to check dependencies before running your sub, as
-        well as running several subs in custom order.
-
-    *   Sub::Spec::CmdLine
-
-        This module provides an easy way to execute your subs from the
-        command line, and even provides extra support like bash completion.
-        Internally, it is just a composition of Sub::Spec::GetArgs::Argv,
-        Sub::Spec::Runner, Sub::Spec::BashComplete.
-
-    *   Sub::Spec::Gen:*
-
-        These modules generate sub spec (and/or the sub code) from some
-        other, probably higher-level or more abstract, specification.
-        Example: Sub::Spec::Gen::ReadTable.
-
-        Someday I also plan to write Sub::Spec::Gen::ReadTable::SQL, to
-        generate table access functions from a SQL database table.
-
-    *   Sub::Spec::Caller
-
-        A helper module to load wanted module and call its sub, but with
-        some options. See its documentation for more details.
-
-    *   Sub::Spec::BashComplete
-
-        A helper module for Sub::Spec::CmdLine, to provide bash completion
-        for programs using spec'ed functions.
 
     *   Sub::Spec::HTTP::*
 
@@ -322,23 +285,66 @@ MODULES FAMILY
         providing remote API access.
 
         You can use any HTTP client to use the API service built using the
-        tool mentioned above, but Sub::Spec::HTTP::Client provides some
+        tool mentioned above, but Sub::Spec::URI::http provides some
         convenience and options.
 
-    *   Sub::Spec::FromURI::*
+    *   Sub::Spec::Object
 
-        Let us refer to local or remote (HTTP) subroutines/specs/subroutine
-        calls using a URI string. For example, Sub::Spec::FromURI::pm to
-        refer to local subs, Sub::Spec::FromURI::http to refer to remote
-        subs over HTTP.
+        Provide object-oriented interface for Sub::Spec-related entities,
+        like: sub response, spec, sub, request, etc.
 
-    *   Sub::Spec::?
+        Not fully implemented.
 
-        Reserved for modules that do some kind of
-        transformation/modification to sub specs.
+    *   Sub::Spec::Response::*
 
-        But honestly, since sub specs are just data structures, you can use
-        whatever tool you want to transform them.
+        These modules are related to (post-)processing or other stuffs to
+        sub response.
+
+    *   Sub::Spec::Runner
+
+        With Sub::Spec you can specify dependencies between subs (and to
+        external objects like an OS software package, a binary, etc). This
+        module can be used to check dependencies before running your sub, as
+        well as running several subs in custom order.
+
+    *   Sub::Spec::Schema
+
+        This module name is reserved, it will contain the Data::Sah's schema
+        for the sub spec, so you can validate your sub specs with it.
+
+        Not yet implemented.
+
+    *   Sub::Spec::To::*
+
+        These modules convert (export) sub spec to various other outputs,
+        example: Sub::Spec::To::Pod (e.g. the generated POD is to be
+        inserted into Perl module files; see Pod::Weaver::Plugin::SubSpec),
+        Sub::Spec::To::Text (e.g. for generating --help/usage message),
+        Sub::Spec::To::HTML and Sub::Spec::To::Org (e.g. to generate API
+        documentation).
+
+    *   Sub::Spec::URI::*
+
+        Let us refer to local or remote (HTTP)
+        module/subroutine/spec/subroutine call using a URI string. For
+        example, Sub::Spec::URI::pm to refer to local subs,
+        Sub::Spec::URI::http to refer to remote subs over HTTP.
+
+    *   Sub::Spec::Use
+
+        Import module like 'use'/'require', with module specified using URI.
+        This has the advantage of being able to import remote subroutines (a
+        proxy function will be created for each remote function).
+
+    *   Sub::Spec::Wrapper
+
+        The module that actually generates the wrapper code for subroutines
+        (including code for validating arguments and all the other code
+        necessary to implement the other spec clauses). Normally, it will be
+        used through Sub::Spec::Exporter or some kind of invoker in your
+        module.
+
+        Not yet implemented.
 
 FAQ
     See Sub::Spec::Manual::FAQ

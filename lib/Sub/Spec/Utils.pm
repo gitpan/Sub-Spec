@@ -4,6 +4,10 @@ use 5.010;
 use strict;
 use warnings;
 
+require Exporter;
+our @ISA = qw(Exporter);
+our @EXPORT_OK = qw(str_log_level);
+
 # currently we cheat by only parsing a limited subset of schema. this is because
 # Data::Sah is not available yet.
 sub _parse_schema {
@@ -20,6 +24,29 @@ sub _parse_schema {
     {type=>$type, clause_sets=>[$schema->[1]]};
 }
 
+my %str_log_levels = (
+    fatal => 1,
+    error => 2,
+    warn  => 3,
+    info  => 4,
+    debug => 5,
+    trace => 6,
+);
+my %int_log_levels = reverse %str_log_levels;
+my $str_log_levels_re = join("|", keys %str_log_levels);
+$str_log_levels_re = qr/(?:$str_log_levels_re)/;
+
+# return undef if unknown
+sub str_log_level {
+    my ($level) = @_;
+    return unless $level;
+    if ($level =~ /^\d+$/) {
+        return $int_log_levels{$level} // undef;
+    }
+    return unless $level =~ $str_log_levels_re;
+    $level;
+}
+
 1;
 
 __END__
@@ -31,7 +58,7 @@ Sub::Spec::Utils
 
 =head1 VERSION
 
-version 1.0.0
+version 1.0.1
 
 =head1 AUTHOR
 
