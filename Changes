@@ -1,5 +1,23 @@
 Revision history for Sub::Spec
 
+1.0.2    2011-08-30
+
+         - Rewrite/reorganize document, put everything in Sub::Spec, remove all
+           the other modules, add Sub::Spec::FAQ.
+
+         - Add Sub::Spec::Schema.
+
+         - Add spec clauses 'type' and 'scope'. Now support methods aside from
+           subroutines.
+
+         - Remove 'statuses' (probably will flesh this out later, doesn't seem
+           to be needed for now).
+
+         - Move str_log_level() in Sub::Spec::Utils to Data::Sah::Util
+           (temporarily in Data-Sah-Util but will be moved to Data-Sah [or
+           removed] eventually).
+
+
 1.0.1    2011-08-29
 
          [INCOMPATIBLE CHANGES]

@@ -12,12 +12,12 @@ my %module_build_args = (
   'configure_requires' => {
     'Module::Build' => '0.3601'
   },
-  'dist_abstract' => 'Subroutine metadata & wrapping framework',
+  'dist_abstract' => 'Subroutine metadata specification',
   'dist_author' => [
     'Steven Haryanto <stevenharyanto@gmail.com>'
   ],
   'dist_name' => 'Sub-Spec',
-  'dist_version' => '1.0.1',
+  'dist_version' => '1.0.2',
   'license' => 'perl',
   'module_name' => 'Sub::Spec',
   'recommends' => {},

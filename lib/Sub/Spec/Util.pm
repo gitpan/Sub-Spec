@@ -1,4 +1,4 @@
-package Sub::Spec::Utils;
+package Sub::Spec::Util;
 
 use 5.010;
 use strict;
@@ -7,22 +7,6 @@ use warnings;
 require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(str_log_level);
-
-# currently we cheat by only parsing a limited subset of schema. this is because
-# Data::Sah is not available yet.
-sub _parse_schema {
-    my ($schema) = @_;
-
-    $schema = [$schema, {}] if !ref($schema);
-    die "BUG: Can't parse hash-form schema yet" if ref($schema) ne 'ARRAY';
-
-    my $type = $schema->[0];
-    $type =~ s/\*$// and $schema->[1]{required} = 1;
-    die "BUG: Can't handle type `$type` yet"
-        unless $type =~ /^(int|float|bool|str|array|hash|any|code|obj)$/;
-
-    {type=>$type, clause_sets=>[$schema->[1]]};
-}
 
 my %str_log_levels = (
     fatal => 1,
@@ -54,11 +38,11 @@ __END__
 
 =head1 NAME
 
-Sub::Spec::Utils
+Sub::Spec::Util
 
 =head1 VERSION
 
-version 1.0.1
+version 1.0.2
 
 =head1 AUTHOR
 
