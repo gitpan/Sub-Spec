@@ -17,7 +17,7 @@ my %module_build_args = (
     'Steven Haryanto <stevenharyanto@gmail.com>'
   ],
   'dist_name' => 'Sub-Spec',
-  'dist_version' => '1.0.2',
+  'dist_version' => '1.0.3',
   'license' => 'perl',
   'module_name' => 'Sub::Spec',
   'recommends' => {},
@@ -26,6 +26,7 @@ my %module_build_args = (
     'File::Which' => '0',
     'Log::Any' => '0',
     'Probe::Perl' => '0',
+    'Sub::Spec::Utils' => '0',
     'Test::More' => '0.96',
     'perl' => '5.010000'
   },

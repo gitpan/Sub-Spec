@@ -1,5 +1,10 @@
 Revision history for Sub::Spec
 
+1.0.3    2011-09-16
+
+         - Fix typo in test script [reported by Lars Dɪᴇᴄᴋᴏᴡ]
+
+
 1.0.2    2011-08-30
 
          - Rewrite/reorganize document, put everything in Sub::Spec, remove all

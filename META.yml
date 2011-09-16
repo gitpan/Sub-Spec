@@ -17,9 +17,10 @@ requires:
   File::Which: 0
   Log::Any: 0
   Probe::Perl: 0
+  Sub::Spec::Utils: 0
   Test::More: 0.96
   perl: 5.010000
 resources:
   homepage: http://search.cpan.org/dist/Sub-Spec/
   repository: http://github.com/sharyanto/perl-Sub-Spec
-version: 1.0.2
+version: 1.0.3

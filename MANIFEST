@@ -13,4 +13,4 @@ lib/Sub/Spec/Util.pm
 t/00-compile.t
 t/release-pod-coverage.t
 t/release-pod-syntax.t
-t/utils-str_log_level.t
+t/util-str_log_level.t
