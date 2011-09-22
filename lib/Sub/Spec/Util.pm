@@ -6,7 +6,7 @@ use warnings;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT_OK = qw(str_log_level);
+our @EXPORT_OK = qw(str_log_level parse_args_as);
 
 my %str_log_levels = (
     fatal => 1,
@@ -31,6 +31,21 @@ sub str_log_level {
     $level;
 }
 
+sub parse_args_as {
+    my ($args_s) = @_;
+    my $args_var;
+    if ($args_s eq 'hash') {
+        $args_var = '%args';
+    } elsif ($args_s eq 'array') {
+        $args_var = '@args';
+    } elsif ($args_s =~ /\A(arrayref|hashref|object)\z/) {
+        $args_var = '$args';
+    } else {
+        die "Invalid args_s value `$args_s`";
+    }
+    return {args_var => $args_var};
+}
+
 1;
 
 __END__
@@ -42,7 +57,7 @@ Sub::Spec::Util
 
 =head1 VERSION
 
-version 1.0.3
+version 1.0.4
 
 =head1 AUTHOR
 

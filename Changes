@@ -1,6 +1,13 @@
 Revision history for Sub::Spec
 
+1.0.4    2011-09-22
+
+         No spec changes. Fix example and add util function: parse_args_as().
+
+
 1.0.3    2011-09-16
+
+         No spec changes.
 
          - Fix typo in test script [reported by Lars Dɪᴇᴄᴋᴏᴡ]
 

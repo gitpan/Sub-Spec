@@ -1,6 +1,6 @@
 package Sub::Spec;
 
-our $VERSION = '1.0.3'; # VERSION
+our $VERSION = '1.0.4'; # VERSION
 
 our $SPEC_VERSION = [1, 0];
 
@@ -17,7 +17,7 @@ Sub::Spec - Subroutine metadata specification
 
 =head1 VERSION
 
-version 1.0.3
+version 1.0.4
 
 =head1 SPEFICATION VERSION
 
@@ -340,8 +340,9 @@ arguments directly from @_, like most normal Perl subroutines.
 
  $SPEC{is_palindrome} = {
      summary => 'Check whether a string is a palindrome',
-     args    => {str => 'str*', ci=>[bool=>{default=>0}]},
-     args_as => 'ARRAY',
+     args    => {str => ['str*' => {arg_pos=>0},
+                 ci  => [bool   => {arg_pos=>1, default=>0}]},
+     args_as => 'array',
      result  => 'bool*',
  };
  sub is_palindrome {
