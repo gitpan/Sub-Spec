@@ -1,6 +1,6 @@
 package Sub::Spec;
 
-our $VERSION = '1.0.4'; # VERSION
+our $VERSION = '1.0.5'; # VERSION
 
 our $SPEC_VERSION = [1, 0];
 
@@ -17,7 +17,7 @@ Sub::Spec - Subroutine metadata specification
 
 =head1 VERSION
 
-version 1.0.4
+version 1.0.5
 
 =head1 SPEFICATION VERSION
 
