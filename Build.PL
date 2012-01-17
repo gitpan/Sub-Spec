@@ -17,7 +17,7 @@ my %module_build_args = (
     "Steven Haryanto <stevenharyanto\@gmail.com>"
   ],
   "dist_name" => "Sub-Spec",
-  "dist_version" => "1.0.5",
+  "dist_version" => "1.0.6",
   "license" => "perl",
   "module_name" => "Sub::Spec",
   "recommends" => {},

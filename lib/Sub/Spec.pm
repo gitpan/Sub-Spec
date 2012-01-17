@@ -1,6 +1,6 @@
 package Sub::Spec;
 
-our $VERSION = '1.0.5'; # VERSION
+our $VERSION = '1.0.6'; # VERSION
 
 our $SPEC_VERSION = [1, 0];
 
@@ -17,13 +17,19 @@ Sub::Spec - Subroutine metadata specification
 
 =head1 VERSION
 
-version 1.0.5
+version 1.0.6
 
 =head1 SPEFICATION VERSION
 
  [1, 0]
 
 =head1 ABSTRACT
+
+B<NOTICE>: The Sub::Spec specification is deprecated as of Jan 2012. L<Rinci> is
+the new specification to replace Sub::Spec, it is about 95% compatible with
+Sub::Spec, but corrects a few issues and is more generic. L<Rias> is the Perl
+implementation for Rinci and many of its modules can handle existing Sub::Spec
+sub specs.
 
 This document specifies Sub::Spec metadata for subroutines (and methods).
 Sub::Spec is a language-neutral specification to describe various aspects of a
@@ -721,7 +727,7 @@ Steven Haryanto <stevenharyanto@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2011 by Steven Haryanto.
+This software is copyright (c) 2012 by Steven Haryanto.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
