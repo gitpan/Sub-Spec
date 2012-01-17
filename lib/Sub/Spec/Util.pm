@@ -57,7 +57,7 @@ Sub::Spec::Util
 
 =head1 VERSION
 
-version 1.0.6
+version 1.0.7
 
 =head1 AUTHOR
 

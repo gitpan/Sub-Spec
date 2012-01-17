@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-our $VERSION = '1.0.6'; # VERSION
+our $VERSION = '1.0.7'; # VERSION
 
 our $SCHEMA = ['hash*', {keys => {}}];
 
@@ -72,7 +72,7 @@ Sub::Spec::Schema - Sah schema for Sub::Spec spec
 
 =head1 VERSION
 
-version 1.0.6
+version 1.0.7
 
 =head1 SYNOPSIS
 

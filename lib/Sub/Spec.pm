@@ -1,6 +1,6 @@
 package Sub::Spec;
 
-our $VERSION = '1.0.6'; # VERSION
+our $VERSION = '1.0.7'; # VERSION
 
 our $SPEC_VERSION = [1, 0];
 
@@ -17,7 +17,7 @@ Sub::Spec - Subroutine metadata specification
 
 =head1 VERSION
 
-version 1.0.6
+version 1.0.7
 
 =head1 SPEFICATION VERSION
 
@@ -27,7 +27,7 @@ version 1.0.6
 
 B<NOTICE>: The Sub::Spec specification is deprecated as of Jan 2012. L<Rinci> is
 the new specification to replace Sub::Spec, it is about 95% compatible with
-Sub::Spec, but corrects a few issues and is more generic. L<Rias> is the Perl
+Sub::Spec, but corrects a few issues and is more generic. L<Perinci> is the Perl
 implementation for Rinci and many of its modules can handle existing Sub::Spec
 sub specs.
 
